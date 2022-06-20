@@ -9,6 +9,7 @@ import com.javainuse.model.Produit;
 import com.javainuse.service.ProduitService;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +36,7 @@ public class CustomerController {
         return "shop";
     }
 
-    @GetMapping("details")
+    @GetMapping("detailsPage")
     public String productDetails() {
         return "product-details";
     }
@@ -60,5 +61,21 @@ public class CustomerController {
         m.addObject("totalElements",page.getTotalElements());
         m.addObject("pagesize",page.getSize());
         return m;
+    }
+    
+    @GetMapping("details")
+    public ModelAndView detailsProduct(@RequestParam String  id){
+        ModelAndView m=new ModelAndView("product-details");
+        m.addObject("produit", produitService.findProduitById(Integer.parseInt(id)));
+        return m;
+    }
+    
+    @GetMapping("panier")
+    public String getPanier(HttpServletRequest req){
+        String qteProduit=req.getParameter("qteProduit");
+        String id=req.getParameter("id0");
+        System.out.println(qteProduit);
+        System.out.println(id);
+        return "test";
     }
 }

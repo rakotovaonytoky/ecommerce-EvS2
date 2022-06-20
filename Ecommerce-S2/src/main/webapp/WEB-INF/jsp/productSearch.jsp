@@ -41,7 +41,7 @@
                     <!-- Sale badge-->
                     <!--<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>-->
                     <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="product image" />
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
@@ -54,34 +54,36 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<%= request.getContextPath() %>/customer/details?id=1">Add to cart</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<%= request.getContextPath() %>/customer/details?id=<%=p.getId() %>">Add to cart</a></div>
                     </div>
                 </div>
             </div>
             <% }%> 
 
-<!--            <div class="col-12">
-               
-            </div>-->
+            <!--            <div class="col-12">
+                           
+                        </div>-->
 
 
 
         </div>
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                 <nav aria-label="Page navigation example">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <% for(int i=0;i<pageList;i++){%>
-                     <li class="page-item"><a class="page-link" href="<%= request.getContextPath() %>/customer/searchingProduct?nom=<%=request.getParameter("nom")%>&pageNo=<%=i%> "><%=i+1 %></a></li>
-                    <% }%>
-                    
-                   
+                        <% for(int i=0;i<pageList;i++){%>
+                    <li class="page-item"><a class="page-link" href="<%= request.getContextPath() %>/customer/searchingProduct?nom=<%=request.getParameter("nom")%>&pageNo=<%=i%> "><%=i+1 %></a></li>
+                        <% }%>
+
+
                     <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </ul>
             </nav>
-            </div>
-        <% } } %>   
+        </div>
+        <% } } %> 
     </div>
 </section>
+
+<script src="<c:url value="/resources/js/shopping-cart.js" />" ></script>
 <%@include file="segment/footer.jsp" %>
 

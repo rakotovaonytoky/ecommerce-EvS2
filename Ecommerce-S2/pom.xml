@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Ecommerce-S2</name>
+    <name>Ecommerce-S2Git</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>

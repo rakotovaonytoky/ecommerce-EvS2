@@ -92,4 +92,8 @@ public class ProduitService {
         }
         return page;
     }
+    
+    public Produit findProduitById(Integer id){
+        return produitRepository.findOne(id);
+    }
 }
