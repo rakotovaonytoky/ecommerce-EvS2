@@ -10,7 +10,31 @@
         %>
         <form name="cart">
             <div class="row gx-4 gx-lg-5 align-items-center">
-                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
+                <div class="col-md-6">
+                    <!--<img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." />-->
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item active">
+                                <img src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item active">
+                                <img src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" class="d-block w-100" alt="...">
+                            </div>
+                           
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="small mb-1">SKU: BST-498</div>
                     <h1 class="display-5 fw-bolder"><%=p.getNom() %></h1>
@@ -25,7 +49,7 @@
                         <input type="hidden" name="id" value="<%=p.getId() %>">
                         <input type="hidden" name="nom" value="<%=p.getNom() %>">
                         <input type="hidden" name="prix" value="<%=p.getPrix() %>">
-                        <input class="form-control text-center me-3" id="inputQuantity" name="quantite" type="num" value="1" style="max-width: 3rem" />
+                        <input class="form-control text-center me-3" id="inputQuantity" name="quantite" type="number" value="1" style="max-width: 3rem" />
                         <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="SaveItem()">
                             <i class="bi-cart-fill me-1"></i>
                             Add to cart
@@ -144,21 +168,21 @@
     </div>
     <div class="container px-4 px-lg-5 mt-5">
         <div class="col-12">
-             <h3>Shopping List</h3>
-        <form action="/customer/panier" method="GET">
-            <input type="hidden" id="qteproduit" name="qteProduit" value="" />
-            <script>
-                document.getElementById("qteproduit").value = localStorage.length;
-            </script>
-            <table class="table" id=list></table>
-            <input type=submit value="Valider" >
-        </form>
-            
-             <p class="text-muted h3" id="total"> </p>
+            <h3>Shopping List</h3>
+            <form action="/customer/panier" method="GET">
+                <input type="hidden" id="qteproduit" name="qteProduit" value="" />
+                <script>
+                    document.getElementById("qteproduit").value = localStorage.length;
+                </script>
+                <table class="table" id=list></table>
+                <input type=submit value="Valider" >
+            </form>
+
+            <p class="text-muted h3" id="total"> </p>
         </div>
     </div>
 </section>
 
 
-<script src="<c:url value="/resources/js/shopping-cart.js" />" ></script>
+
 <%@include file="segment/footer.jsp" %>

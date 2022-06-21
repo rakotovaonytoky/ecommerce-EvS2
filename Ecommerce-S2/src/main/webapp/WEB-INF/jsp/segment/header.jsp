@@ -14,12 +14,15 @@
         <link rel="icon" type="image/x-icon" href="<c:url value="/resources/assets/favicon.ico" />" />
         <!-- core theme CSS -->
         <link href="<c:url value="/resources/css/styles.css" />" rel="stylesheet">
+        <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
         <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />-->
         <!-- Core theme CSS (includes Bootstrap)-->
-        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!--<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>-->
+        <!-- CSS only -->
+        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">-->
     </head>
-    <body>
+    <body onload="doShowAll()">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid px-4 px-lg-5">
@@ -46,10 +49,10 @@
                         </div>
                     </form>
                     <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
+                        <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span id="total-product" onload="shoppingList()" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                         </button>
                     </form>
                     <ul class="navbar-nav">
@@ -59,8 +62,8 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="<%= request.getContextPath() %>/logout">logout</a></li>
-                               
-                              
+
+
                             </ul>
                         </li>
                     </ul>
@@ -68,3 +71,34 @@
                 </div>
             </div>
         </nav>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h3 text-muted" id="exampleModalLabel">Votre panier</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/customer/panier" method="GET">
+                        <div class="modal-body">
+                            <h3>Shopping List</h3>
+
+                            <input type="hidden" id="qteproduit" name="qteProduit" value="" />
+                            <script>
+                                document.getElementById("qteproduit").value = localStorage.length;
+                            </script>
+                            <table class="table" id=list></table>
+                            <!--<input type=submit value="Valider" >-->
+
+
+                            <p class="text-muted h3" id="total"> </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Valider</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>                      

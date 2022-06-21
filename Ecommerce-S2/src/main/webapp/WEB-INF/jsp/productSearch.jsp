@@ -15,10 +15,10 @@
                   Integer totalElements=(int) (long)(request.getAttribute("totalElements"));
                   Integer pagesize=(Integer)request.getAttribute("pagesize");
                   
-                  String currentPage="1";
+                  String currentPage="0";
                   if(request.getParameter("pageNo")!=null){
                       currentPage=request.getParameter("pageNo");
-                      if(currentPage.equals("0")) currentPage="1";
+//                      if(currentPage.equals("0")) currentPage="1";
                   }
 //                  Integer totalElements=Integer.parseInt((String)request.getAttribute("totalElements"));
 //                  Integer pagesize=Integer.parseInt((String)request.getAttribute("pagesize"));
@@ -27,7 +27,7 @@
         %>
         <div class="col-12">
             <p class="fs-4">
-                page <%=currentPage %>/ <%=pageList %> sur <%=totalElements%>
+                page <% out.print(Integer.parseInt(currentPage)+1); %>/ <%=pageList %> sur <%=totalElements%>
                 résultats pour :
                 <span class="text-danger"> "<% out.print(request.getParameter("nom")); %>"</span></p>
         </div>
@@ -70,7 +70,11 @@
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <% 
+                    if(request.getParameter("pageNo")!=null && Integer.parseInt(request.getParameter("pageNo")) >0 ){
+                    %>
+                    <li class="page-item"><a class="page-link" href="<%= request.getContextPath() %>/customer/searchingProduct?nom=<%=request.getParameter("nom")%>&pageNo=<%=currentPage%> ">Previous</a></li>
+                    <% } %>
                         <% for(int i=0;i<pageList;i++){%>
                     <li class="page-item"><a class="page-link" href="<%= request.getContextPath() %>/customer/searchingProduct?nom=<%=request.getParameter("nom")%>&pageNo=<%=i%> "><%=i+1 %></a></li>
                         <% }%>
