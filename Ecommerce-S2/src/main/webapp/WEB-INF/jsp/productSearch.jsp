@@ -71,16 +71,17 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <% 
+                        Integer currentPageInteger=Integer.parseInt(currentPage) ;
                     if(request.getParameter("pageNo")!=null && Integer.parseInt(request.getParameter("pageNo")) >0 ){
                     %>
-                    <li class="page-item"><a class="page-link" href="<%= request.getContextPath() %>/customer/searchingProduct?nom=<%=request.getParameter("nom")%>&pageNo=<%=currentPage%> ">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="<%= request.getContextPath() %>/customer/searchingProduct?nom=<%=request.getParameter("nom")%>&pageNo=<%=(currentPageInteger -1)%> ">Previous</a></li>
                     <% } %>
                         <% for(int i=0;i<pageList;i++){%>
                     <li class="page-item"><a class="page-link" href="<%= request.getContextPath() %>/customer/searchingProduct?nom=<%=request.getParameter("nom")%>&pageNo=<%=i%> "><%=i+1 %></a></li>
                         <% }%>
-
-
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    <% // if( pageList < (Integer.parseInt(request.getParameter("pageNo")) +1)   ) %>
+                    <li class="page-item"><a class="page-link" href="<%= request.getContextPath() %>/customer/searchingProduct?nom=<%=request.getParameter("nom")%>&pageNo=<%=(currentPageInteger +1)%> ">Next</a></li>
+                    <%%>
                 </ul>
             </nav>
         </div>

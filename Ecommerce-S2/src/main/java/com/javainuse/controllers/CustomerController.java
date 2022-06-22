@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -44,9 +45,6 @@ public class CustomerController {
     @GetMapping("searchingProduct")
     public ModelAndView SearchProductModifyProduct(@RequestParam String nom, @RequestParam(required = false) String pageNo) {
         ModelAndView m = new ModelAndView("productSearch");
-        List<Produit> lisp = new ArrayList<Produit>();
-//        Page<Produit> page=produitService.findByProductByNameWithPagination(nom, Integer.valueOf(pageNo), 2);
-//        Page<Produit> page=null;
         Page<Produit> page = null;
         Pageable pageable = null;
         if (pageNo == null) {
@@ -77,5 +75,18 @@ public class CustomerController {
         System.out.println(qteProduit);
         System.out.println(id);
         return "test";
+    }
+    
+    @GetMapping("autocomplete")
+    @ResponseBody
+    public String inputAutoComplete(@RequestParam String  nom){
+        String result="";
+        List<Produit> listproduit=produitService.findProduitByName(nom);
+        if(listproduit.size() >0){
+           for(int i=0;i<listproduit.size();i++){
+               result+="<option value='"+listproduit.get(i).getNom()+"'>";
+           }
+        }
+        return result;
     }
 }

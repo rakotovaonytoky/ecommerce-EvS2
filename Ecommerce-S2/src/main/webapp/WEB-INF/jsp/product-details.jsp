@@ -166,21 +166,7 @@
             </div>
         </div>
     </div>
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="col-12">
-            <h3>Shopping List</h3>
-            <form action="/customer/panier" method="GET">
-                <input type="hidden" id="qteproduit" name="qteProduit" value="" />
-                <script>
-                    document.getElementById("qteproduit").value = localStorage.length;
-                </script>
-                <table class="table" id=list></table>
-                <input type=submit value="Valider" >
-            </form>
-
-            <p class="text-muted h3" id="total"> </p>
-        </div>
-    </div>
+    
 </section>
 
 

@@ -61,7 +61,6 @@ public class ProduitService {
     public void addProductImage(MultipartFile file,String pathFolder) throws FileNotFoundException, IOException{
 //           File path = new File("D:\\testupload\\" + file.getOriginalFilename());
            File path = new File(pathFolder + file.getOriginalFilename());
-
             path.createNewFile();
             FileOutputStream output = new FileOutputStream(path);
             output.write(file.getBytes());
@@ -77,7 +76,6 @@ public class ProduitService {
     public Page<Produit> findByProductByNameWithPagination(String name,int pageNo,int pageSize){
 //        rehefa tsisy sort
          Pageable pageable =new PageRequest(pageNo, pageSize);
-
         Page<Produit> page = produitRepository.findAll(pageable);
         System.out.println("****************************************");
         System.out.println( page.getTotalPages());
@@ -85,11 +83,7 @@ public class ProduitService {
     }
     
     public Page<Produit> produitsPagination(String name, Pageable p){
-        List<Produit> listproduit=new ArrayList<Produit>();
         Page<Produit> page=produitRepository.findByNomContainingIgnoreCase(name, p);
-        if(listproduit == null){
-            throw new RuntimeException("aucun produits");
-        }
         return page;
     }
     

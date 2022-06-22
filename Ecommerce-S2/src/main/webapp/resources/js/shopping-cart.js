@@ -10,14 +10,9 @@ function SaveItem() {
     tableau[1] = nom;
     tableau[2] = prix;
     tableau[3] = quantite;
-    var row = id + nom + prix + quantite;
-     for (i = 0; i <= localStorage.length - 1; i++) {
-         if(localStorage.key(i) == id){
-             alert("Ce produit est déja dans votre panier");
-             return;
-         }
-     }
+    checkProduitInCart(id);
     localStorage.setItem(id, JSON.stringify(tableau));
+     alert("Ajout avec success");
     updateCart();
     doShowAll();
 }
@@ -44,12 +39,14 @@ function doShowAll() {
             <td>" + "<button type='button' class='btn btn-danger' onclick='remove(this," + key + ")'>Effacer</button>" + "</td>\n\
             </tr>\n";
     }
-    if (list == "<tr><th>Item</th><th>Value</th></tr>\n") {
+    if (list == "<tr><th scope='row'>Item</th><th>Nom</th><th>Prix</th><th>Quantite</th></tr>\n") {
         list += "<tr><td colspan='3'><i>empty</i></td></tr>\n";
     }
     document.getElementById('list').innerHTML = list;
     shoppingList();
-    
+   EnableButtonCart();
+//    document.getElementById("validateCart").disabled = false;
+
 }
 
 function remove(tablerow, key) {
@@ -59,6 +56,7 @@ function remove(tablerow, key) {
     row.parentNode.removeChild(row);
     localStorage.removeItem(key);
     updateCart();
+    EnableButtonCart();
     doShowAll();
 }
 
@@ -72,10 +70,8 @@ function updateCart() {
     document.getElementById('total').innerHTML = "Total:  $" + totalPrice;
 }
 function updateQuantity(quantity, key) {
-    console.log(quantity.value);
     quantity = parseInt(quantity.value);
     var item = JSON.parse(localStorage.getItem(key));
-    console.log(item);
     if (quantity <= 0 || isNaN(quantity)) {
         quantity = 1;
     }
@@ -86,15 +82,32 @@ function updateQuantity(quantity, key) {
     tableau[3] = quantity;
     localStorage.setItem(tableau[0], JSON.stringify(tableau));
     updateCart();
-//    doShowAll();
 
 }
 function shoppingList() {
-    const number=document.getElementById("total-product");
-    console.log(document.getElementById("total-product").innerHTML);
-    var total=localStorage.length;
-    if( localStorage.length < 0){total=0 };
+    const number = document.getElementById("total-product");
+//    console.log(document.getElementById("total-product").innerHTML);
+    var total = localStorage.length;
+    if (localStorage.length < 0) {
+        total = 0
+    }
+    ;
     console.log(total);
-//        number.textContent = 12;
-   number.textContent =total;
+    number.textContent = total;
 }
+function checkProduitInCart(id) {
+    if(localStorage.length >0){
+        for (i = 0; i <= localStorage.length - 1; i++) {
+        if (localStorage.key(i) == id) {
+            alert("Ce produit est déja dans votre panier");
+            return;
+        }
+       
+        }
+    }
+}
+function EnableButtonCart(){
+     if( localStorage.length >0){
+        document.getElementById("validateCart").disabled = false;
+    }
+    }
