@@ -5,6 +5,7 @@
  */
 package com.javainuse.dao;
 
+import com.javainuse.model.Categorie;
 import com.javainuse.model.Produit;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -22,4 +23,8 @@ public interface ProduitRepository extends JpaRepository<Produit,Integer> {
     List<Produit> findByNomContainingIgnoreCase(String nom);
     
     Page<Produit> findByNomContainingIgnoreCase(String nom,Pageable p);
+    
+    Page<Produit> findByIdcategorie(Categorie c,Pageable p);
+    
+    List<Produit> findByIdcategorie(Categorie c);
 }

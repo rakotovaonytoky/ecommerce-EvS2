@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Customer.findBySolde", query = "SELECT c FROM Customer c WHERE c.solde = :solde")})
 public class Customer implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcustomer", fetch = FetchType.LAZY)
+    private List<Portefeuille> portefeuilleList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -149,6 +152,15 @@ public class Customer implements Serializable {
     @Override
     public String toString() {
         return "com.javainuse.model.Customer[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Portefeuille> getPortefeuilleList() {
+        return portefeuilleList;
+    }
+
+    public void setPortefeuilleList(List<Portefeuille> portefeuilleList) {
+        this.portefeuilleList = portefeuilleList;
     }
     
 }

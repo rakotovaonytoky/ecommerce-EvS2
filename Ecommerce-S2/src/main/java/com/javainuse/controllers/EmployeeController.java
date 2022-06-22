@@ -3,6 +3,7 @@ package com.javainuse.controllers;
 import com.javainuse.model.Employee;
 import com.javainuse.model.UserRegistration;
 import com.javainuse.service.EmployeeService;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class EmployeeController {
@@ -40,8 +42,10 @@ public class EmployeeController {
     }
     
     @GetMapping("/")
-    public String LoadIndex(){
-        return "index";
+    public RedirectView LoadIndex(Principal p){
+        RedirectView r=new RedirectView("/customer/shop");
+//        return "index";
+         return r;
     }
     
     @RequestMapping(value = "/addNewEmployee", method = RequestMethod.GET)

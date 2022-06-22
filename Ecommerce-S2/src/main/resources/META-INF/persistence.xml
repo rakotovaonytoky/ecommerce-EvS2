@@ -10,6 +10,8 @@
     <class>com.javainuse.model.Detailsachat</class>
     <class>com.javainuse.model.Produit</class>
     <class>com.javainuse.model.Detailspanier</class>
+    <class>com.javainuse.model.Portefeuille</class>
+    <class>com.javainuse.model.Mvstock</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bootdb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

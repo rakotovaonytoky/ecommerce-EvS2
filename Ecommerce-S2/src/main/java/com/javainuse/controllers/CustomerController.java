@@ -5,10 +5,14 @@
  */
 package com.javainuse.controllers;
 
+import com.javainuse.model.Portefeuille;
 import com.javainuse.model.Produit;
 import com.javainuse.service.ProduitService;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,8 +38,16 @@ public class CustomerController {
     private ProduitService produitService;
 
     @GetMapping("shop")
-    public String loadShopPage() {
-        return "shop";
+    public ModelAndView loadShopPage(@RequestParam(required = false) String id) {
+        ModelAndView m = new ModelAndView("shop");
+        m.addObject("categories", produitService.findAllCategorie());
+        if (id == null) {
+            m.addObject("listproduit", produitService.findProductByCategorie(1));
+
+        } else {
+            m.addObject("listproduit", produitService.findProductByCategorie(Integer.parseInt(id)));
+        }
+        return m;
     }
 
     @GetMapping("detailsPage")
@@ -51,42 +64,79 @@ public class CustomerController {
             pageable = new PageRequest(0, 2);
             page = produitService.produitsPagination(nom, pageable);
         } else {
-           pageable = new PageRequest(Integer.parseInt(pageNo), 2);
+            pageable = new PageRequest(Integer.parseInt(pageNo), 2);
             page = produitService.produitsPagination(nom, pageable);
         }
         m.addObject("listproduit", page.getContent());
-        m.addObject("pageList",page.getTotalPages());
-        m.addObject("totalElements",page.getTotalElements());
-        m.addObject("pagesize",page.getSize());
+        m.addObject("pageList", page.getTotalPages());
+        m.addObject("totalElements", page.getTotalElements());
+        m.addObject("pagesize", page.getSize());
         return m;
     }
-    
+
     @GetMapping("details")
-    public ModelAndView detailsProduct(@RequestParam String  id){
-        ModelAndView m=new ModelAndView("product-details");
+    public ModelAndView detailsProduct(@RequestParam String id) {
+        ModelAndView m = new ModelAndView("product-details");
         m.addObject("produit", produitService.findProduitById(Integer.parseInt(id)));
         return m;
     }
-    
+
     @GetMapping("panier")
-    public String getPanier(HttpServletRequest req){
-        String qteProduit=req.getParameter("qteProduit");
-        String id=req.getParameter("id0");
+    public String getPanier(Principal principal, HttpServletRequest req) {
+        if (principal == null) {
+            String redirect = "redirect:/";
+            new ModelAndView(redirect);
+        }
+        String qteProduit = req.getParameter("qteProduit");
+        String id = req.getParameter("id0");
         System.out.println(qteProduit);
         System.out.println(id);
         return "test";
     }
-    
+
     @GetMapping("autocomplete")
     @ResponseBody
-    public String inputAutoComplete(@RequestParam String  nom){
-        String result="";
-        List<Produit> listproduit=produitService.findProduitByName(nom);
-        if(listproduit.size() >0){
-           for(int i=0;i<listproduit.size();i++){
-               result+="<option value='"+listproduit.get(i).getNom()+"'>";
-           }
+    public String inputAutoComplete(@RequestParam String nom) {
+
+        String result = "";
+        List<Produit> listproduit = produitService.findProduitByName(nom);
+        if (listproduit.size() > 0) {
+            for (int i = 0; i < listproduit.size(); i++) {
+                result += "<option value='" + listproduit.get(i).getNom() + "'>";
+            }
         }
         return result;
+    }
+
+    @GetMapping("loadMoneyPage")
+    public String loaddMoney() {
+        return "portfolio";
+    }
+
+    @PostMapping("ProcessMoney")
+    public ModelAndView addMoneyProcess( HttpServletRequest req,Principal principle) throws Exception {
+        String money=req.getParameter("money");
+        ModelAndView m = new ModelAndView();
+        Portefeuille p = new Portefeuille();
+        if (money != null) {
+            try {
+                p.setIdcustomer(produitService.findCustomerByName(principle.getName()));
+                p.setMontant(Integer.parseInt(money));
+                p.setEtat("attente");
+                produitService.insertMoney(p);
+                m.setViewName("portfolio");
+                m.addObject("attribute", "<div class='alert alert-success' role='alert'>\n"
+                        + "  Ajout avec success!Attendez la confirmation des admin\n"
+                        + "</div>");
+            } catch (Exception ex) {
+                 m.addObject("attribute", "<div class='alert alert-danger' role='alert'>\n"
+                        + "  Erreur!!"+ex.getMessage()+"\n"
+                        + "</div>");
+                
+                
+            }
+            m.setViewName("portfolio");
+        }
+        return m;
     }
 }

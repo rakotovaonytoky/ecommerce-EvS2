@@ -46,6 +46,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Produit.findByImage4", query = "SELECT p FROM Produit p WHERE p.image4 = :image4")})
 public class Produit implements Serializable {
 
+    @Column(name = "qte")
+    private Integer qte;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproduit", fetch = FetchType.LAZY)
+    private List<Mvstock> mvstockList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -211,6 +216,23 @@ public class Produit implements Serializable {
     @Override
     public String toString() {
         return "com.javainuse.model.Produit[ id=" + id + " ]";
+    }
+
+    public Integer getQte() {
+        return qte;
+    }
+
+    public void setQte(Integer qte) {
+        this.qte = qte;
+    }
+
+    @XmlTransient
+    public List<Mvstock> getMvstockList() {
+        return mvstockList;
+    }
+
+    public void setMvstockList(List<Mvstock> mvstockList) {
+        this.mvstockList = mvstockList;
     }
     
 }

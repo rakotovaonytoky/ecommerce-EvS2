@@ -37,7 +37,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Magasin</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                                <li><a class="dropdown-item" href="<%= request.getContextPath() %>/customer/loadMoneyPage">Money virtuel</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="#!">Popular Items</a></li>
                                 <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
@@ -48,11 +48,7 @@
                         <div class="input-group">
                             <input class="form-control" type="text" name="nom" id="searchParameter" list="searchParameterDatalist" placeholder="Search for..." autocomplete="off" aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                             <datalist id="searchParameterDatalist">
-                                <option value="Internet Explorer">
-                                <option value="Firefox">
-                                <option value="Chrome">
-                                <option value="Opera">
-                                <option value="Safari">
+                                
                             </datalist>
 
                             <button class="btn btn-secondary" id="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
@@ -113,30 +109,30 @@
             </div>
         </div> 
         <script>
-            $(document).ready(function () {
-                $("#searchParameter").keyup(function () {
-                    $(this).css("background-color", "pink");
-                    console.log($(this).val());
-
-
-                    $.ajax({
-                        type: "GET",
-                        url: "http://localhost:8080/customer/autocomplete?nom="+$(this).val(),
-                        cache: false,
-                        success: function (data) {
-                            $("#searchParameterDatalist").html(data);
-                            
-                        },
-                        error: function (err) {
-                            $("#searchParameterDatalist").html("<span style='color: red'>Name is required</span>");
-                        }
-                    });
-
-
-
-
-                });
-            });
+//            $(document).ready(function () {
+//                $("#searchParameter").keyup(function () {
+//                    $(this).css("background-color", "pink");
+//                    console.log($(this).val());
+//
+//
+//                    $.ajax({
+//                        type: "GET",
+//                        url: "http://localhost:8080/customer/autocomplete?nom="+$(this).val(),
+//                        cache: false,
+//                        success: function (data) {
+//                            $("#searchParameterDatalist").html(data);
+//                            
+//                        },
+//                        error: function (err) {
+//                            $("#searchParameterDatalist").html("<option></option>");
+//                        }
+//                    });
+//
+//
+//
+//
+//                });
+//            });
         </script>
 
 

@@ -6,8 +6,12 @@
 package com.javainuse.service;
 
 import com.javainuse.dao.CategorieRepository;
+import com.javainuse.dao.CustomerRepository;
+import com.javainuse.dao.PortefeuilleRepository;
 import com.javainuse.dao.ProduitRepository;
 import com.javainuse.model.Categorie;
+import com.javainuse.model.Customer;
+import com.javainuse.model.Portefeuille;
 import com.javainuse.model.Produit;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,12 +36,18 @@ public class ProduitService {
     
     private CategorieRepository categorieRepository;
     private ProduitRepository produitRepository; 
+    private PortefeuilleRepository portefeuilleRepository;
+    private CustomerRepository customerRepository; 
 
     @Autowired
-    public ProduitService(CategorieRepository categorieRepository, ProduitRepository ProduitRepository) {
+    public ProduitService(CategorieRepository categorieRepository, ProduitRepository produitRepository, PortefeuilleRepository portefeuilleRepository, CustomerRepository customerRepository) {
         this.categorieRepository = categorieRepository;
-        this.produitRepository = ProduitRepository;
+        this.produitRepository = produitRepository;
+        this.portefeuilleRepository = portefeuilleRepository;
+        this.customerRepository = customerRepository;
     }
+
+   
     
     public List<Categorie> findAllCategorie(){
         List<Categorie> listCategorie=new ArrayList<Categorie>();
@@ -46,6 +56,8 @@ public class ProduitService {
         if(listCategorie.isEmpty()) throw new RuntimeException("liste produit vide");
         return listCategorie;
     }
+
+    
     
     public Categorie findCategorie(Integer id){
         return categorieRepository.findOne(id);
@@ -90,4 +102,25 @@ public class ProduitService {
     public Produit findProduitById(Integer id){
         return produitRepository.findOne(id);
     }
+    public Page<Produit> findProductByCategorie(Integer id ,Pageable p){
+        Categorie c=findCategorie( id);
+        return produitRepository.findByIdcategorie(c,p);
+        
+    }
+    public List<Produit> findProductByCategorie(Integer id ){
+        Categorie c=findCategorie( id);
+        return produitRepository.findByIdcategorie(c);    
+    }
+    public void insertMoney(Portefeuille p) throws Exception{
+        try{
+             portefeuilleRepository.save(p);
+        }catch(Exception e){
+            throw e;
+        }
+       
+    }
+    public Customer findCustomerByName(String name){
+        return customerRepository.findByName(name);
+    }
+    
 }
