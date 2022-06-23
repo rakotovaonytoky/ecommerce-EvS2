@@ -55,6 +55,7 @@ function remove(tablerow, key) {
     var row = tablerow.parentNode.parentNode;
     row.parentNode.removeChild(row);
     localStorage.removeItem(key);
+    location.reload(true);
     updateCart();
     EnableButtonCart();
     doShowAll();
@@ -68,6 +69,7 @@ function updateCart() {
         totalPrice += tempStorage[2] * tempStorage[3];
     }
     document.getElementById('total').innerHTML = "Total:  $" + totalPrice;
+    document.getElementById('totalprixproduit').value = totalPrice;
 }
 function updateQuantity(quantity, key) {
     quantity = parseInt(quantity.value);

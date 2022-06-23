@@ -27,4 +27,6 @@ public interface ProduitRepository extends JpaRepository<Produit,Integer> {
     Page<Produit> findByIdcategorie(Categorie c,Pageable p);
     
     List<Produit> findByIdcategorie(Categorie c);
+    
+    Produit findTopByOrderByIdDesc();
 }

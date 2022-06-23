@@ -5,8 +5,7 @@
  */
 package com.javainuse.dao;
 
-import com.javainuse.model.Portefeuille;
-import java.util.List;
+import com.javainuse.model.Detailsachat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author U
  */
 @Repository
-public interface PortefeuilleRepository  extends JpaRepository<Portefeuille,Integer>{
+public interface DetailsachatRepository extends JpaRepository<Detailsachat,Integer>{
     
-    List<Portefeuille> findByEtat(String etat);
 }

@@ -49,12 +49,15 @@
                         <input type="hidden" name="id" value="<%=p.getId() %>">
                         <input type="hidden" name="nom" value="<%=p.getNom() %>">
                         <input type="hidden" name="prix" value="<%=p.getPrix() %>">
-                        <input class="form-control text-center me-3" id="inputQuantity" name="quantite" type="number" value="1" style="max-width: 3rem" />
+                        <input class="form-control text-center me-3" id="inputQuantity" name="quantite" type="number" value="1" style="max-width: 4em" />
                         <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="SaveItem()">
                             <i class="bi-cart-fill me-1"></i>
                             Add to cart
                         </button>
                     </div>
+                        <p class="lead mt-2">
+                            Reste en stock : <span class="h3 text-muted"><%=p.getQte()%></span>
+                    </p>
                 </div>
             </div>
         </form>

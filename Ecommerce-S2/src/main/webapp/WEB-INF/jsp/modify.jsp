@@ -40,6 +40,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Prix</th>
+                            <th scope="col">Quantite</th>
                            
                         </tr>
                     </thead>
@@ -51,6 +52,7 @@
                             <th scope="row"><%=p.getId() %></th>
                             <td><%=p.getNom() %></td>
                             <td><%=p.getPrix() %></td>
+                            <td><%=p.getQte() %></td>
                             
                         </tr>
                        <% } } %>

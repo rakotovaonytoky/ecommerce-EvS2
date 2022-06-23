@@ -6,6 +6,7 @@
 package com.javainuse.controllers;
 
 import com.javainuse.model.Produit;
+import com.javainuse.service.OtherService;
 import com.javainuse.service.ProduitService;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -32,6 +33,8 @@ public class AdminController {
 
     @Autowired
     private ProduitService produitService;
+    @Autowired
+    private OtherService otherservice;
 
     @GetMapping("index")
     public String showIndex() {
@@ -94,6 +97,14 @@ public class AdminController {
     public ModelAndView SearchProductModifyProduct( @RequestParam String nom){
         ModelAndView m= new ModelAndView("modify");
         m.addObject("listproduit", produitService.findProduitByName(nom));
+        return m;
+    }
+    
+   
+    @GetMapping("validPortfolio")
+    public ModelAndView showAllPortfolio(){
+        ModelAndView m= new ModelAndView("adminPortfolio");
+        m.addObject("listproduit", otherservice.findPortefeuilleByEtat("attente"));
         return m;
     }
 }

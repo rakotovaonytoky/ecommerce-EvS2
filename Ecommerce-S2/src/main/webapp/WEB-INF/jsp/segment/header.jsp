@@ -90,14 +90,17 @@
                             <h3>Shopping List</h3>
 
                             <input type="hidden" id="qteproduit" name="qteProduit" value="" />
+                            <input type="hidden" id="totalprixproduit" name="totalprixproduit" value="" />
                             <script>
                                 document.getElementById("qteproduit").value = localStorage.length;
+                               
                             </script>
                             <table class="table" id=list></table>
                             <!--<input type=submit value="Valider" >-->
 
 
                             <p class="text-muted h3" id="total"> </p>
+                            <p class="text-muted h3" id="totalHidden" style="display:none"> </p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -109,30 +112,30 @@
             </div>
         </div> 
         <script>
-//            $(document).ready(function () {
-//                $("#searchParameter").keyup(function () {
-//                    $(this).css("background-color", "pink");
-//                    console.log($(this).val());
-//
-//
-//                    $.ajax({
-//                        type: "GET",
-//                        url: "http://localhost:8080/customer/autocomplete?nom="+$(this).val(),
-//                        cache: false,
-//                        success: function (data) {
-//                            $("#searchParameterDatalist").html(data);
-//                            
-//                        },
-//                        error: function (err) {
-//                            $("#searchParameterDatalist").html("<option></option>");
-//                        }
-//                    });
-//
-//
-//
-//
-//                });
-//            });
+            $(document).ready(function () {
+                $("#searchParameter").keyup(function () {
+                    $(this).css("background-color", "pink");
+                    console.log($(this).val());
+
+
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost:8080/customer/autocomplete?nom="+$(this).val(),
+                        cache: false,
+                        success: function (data) {
+                            $("#searchParameterDatalist").html(data);
+                            
+                        },
+                        error: function (err) {
+                            $("#searchParameterDatalist").html("<option></option>");
+                        }
+                    });
+
+
+
+
+                });
+            });
         </script>
 
 

@@ -89,6 +89,7 @@ public class Produit implements Serializable {
     @JoinColumn(name = "idcategorie", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Categorie idcategorie;
+    
 
     public Produit() {
     }
@@ -233,6 +234,15 @@ public class Produit implements Serializable {
 
     public void setMvstockList(List<Mvstock> mvstockList) {
         this.mvstockList = mvstockList;
+    }
+    public Integer quantityWithMvt(){
+        Integer sum=0;
+        if(mvstockList.size() >0){
+            for(Mvstock m : mvstockList){
+                sum+=m.getEtat();
+            }
+        }
+        return sum;
     }
     
 }

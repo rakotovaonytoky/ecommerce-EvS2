@@ -5,6 +5,8 @@
  */
 package com.javainuse.controllers;
 
+import com.javainuse.config.util.ProductQuantity;
+import com.javainuse.model.Customer;
 import com.javainuse.model.Portefeuille;
 import com.javainuse.model.Produit;
 import com.javainuse.service.ProduitService;
@@ -88,9 +90,30 @@ public class CustomerController {
             new ModelAndView(redirect);
         }
         String qteProduit = req.getParameter("qteProduit");
-        String id = req.getParameter("id0");
-        System.out.println(qteProduit);
-        System.out.println(id);
+        List<Produit> listp = new ArrayList<Produit>();
+        List<ProductQuantity> listpQuantity = new ArrayList<ProductQuantity>();
+        List<Integer> listIdProduit = new ArrayList<Integer>();
+        for (int i = 0; i < Integer.parseInt(qteProduit); i++) {
+            listIdProduit = produitService.getProductListFromQuantity(listIdProduit,
+                    Integer.parseInt(req.getParameter("id" + i)),
+                    Integer.parseInt(req.getParameter("quantite" + i)));
+            
+            listpQuantity = produitService.getProductQuantityList(listpQuantity,
+                    Integer.parseInt(req.getParameter("id" + i)),
+                    Integer.parseInt(req.getParameter("quantite" + i)));
+        }
+        listp = produitService.findProductInCart(listIdProduit);
+        Integer totalPice=produitService.getTotalProductPrice(listp);
+        try{
+            produitService. estValidePaiement( listp,produitService.findCustomerByName(principal.getName()));
+            produitService.checkQteProduit(listpQuantity);
+            
+//            Mbola mila asina mouvement de stock
+        }catch(Exception e){
+//            e.printStackTrace();
+            throw e;
+//            System.out.print(e.getMessage());
+        }
         return "test";
     }
 
@@ -114,8 +137,8 @@ public class CustomerController {
     }
 
     @PostMapping("ProcessMoney")
-    public ModelAndView addMoneyProcess( HttpServletRequest req,Principal principle) throws Exception {
-        String money=req.getParameter("money");
+    public ModelAndView addMoneyProcess(HttpServletRequest req, Principal principle) throws Exception {
+        String money = req.getParameter("money");
         ModelAndView m = new ModelAndView();
         Portefeuille p = new Portefeuille();
         if (money != null) {
@@ -129,11 +152,10 @@ public class CustomerController {
                         + "  Ajout avec success!Attendez la confirmation des admin\n"
                         + "</div>");
             } catch (Exception ex) {
-                 m.addObject("attribute", "<div class='alert alert-danger' role='alert'>\n"
-                        + "  Erreur!!"+ex.getMessage()+"\n"
+                m.addObject("attribute", "<div class='alert alert-danger' role='alert'>\n"
+                        + "  Erreur!!" + ex.getMessage() + "\n"
                         + "</div>");
-                
-                
+
             }
             m.setViewName("portfolio");
         }
