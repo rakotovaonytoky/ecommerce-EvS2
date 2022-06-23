@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -188,6 +189,7 @@ public class ProduitService {
             Mvstock mvt=new Mvstock();
             mvt.setEtat(p.getQte() * -1);
             mvt.setIdproduit(pd);
+            mvt.setDatemvtstock(new Date());
             mvtStockRepository.save(mvt);
             pd.setQte(pd.getQte() - p.getQte());
             produitRepository.save(pd);
@@ -198,6 +200,7 @@ public class ProduitService {
     public void insertAchatWhenValidCart(List<Produit> listp,Customer c){
         Achat a=new Achat();
         a.setIdcustomer(c);
+        a.setDateachat(new Date());
         a.setTotal(new BigDecimal(getTotalProductPrice(listp)));
        a= achatRepository.save(a);
         

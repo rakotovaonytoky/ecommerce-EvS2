@@ -90,6 +90,7 @@ public class CustomerController {
             new ModelAndView(redirect);
         }
         String qteProduit = req.getParameter("qteProduit");
+        Customer c=produitService.findCustomerByName(principal.getName());
         List<Produit> listp = new ArrayList<Produit>();
         List<ProductQuantity> listpQuantity = new ArrayList<ProductQuantity>();
         List<Integer> listIdProduit = new ArrayList<Integer>();
@@ -105,9 +106,12 @@ public class CustomerController {
         listp = produitService.findProductInCart(listIdProduit);
         Integer totalPice=produitService.getTotalProductPrice(listp);
         try{
-            produitService. estValidePaiement( listp,produitService.findCustomerByName(principal.getName()));
+            produitService. estValidePaiement( listp,c);
             produitService.checkQteProduit(listpQuantity);
-            
+//            Manala ao amin'stock
+            produitService.updateMvtStockWhenInsertCmd(listpQuantity);
+//            Mampiditra dans achat
+            produitService.insertAchatWhenValidCart(listp, c);
 //            Mbola mila asina mouvement de stock
         }catch(Exception e){
 //            e.printStackTrace();
