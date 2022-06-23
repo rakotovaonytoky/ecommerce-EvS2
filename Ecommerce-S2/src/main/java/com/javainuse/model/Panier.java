@@ -29,14 +29,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author U
  */
 @Entity
-@Table(name = "panier", catalog = "ecommerce", schema = "POSTGRES")
+@Table(name = "panier", catalog = "ecommerce", schema = "postgres")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Panier.findAll", query = "SELECT p FROM Panier p"),
     @NamedQuery(name = "Panier.findById", query = "SELECT p FROM Panier p WHERE p.id = :id"),
     @NamedQuery(name = "Panier.findByDatepanier", query = "SELECT p FROM Panier p WHERE p.datepanier = :datepanier"),
-    @NamedQuery(name = "Panier.findByIdproduit", query = "SELECT p FROM Panier p WHERE p.idproduit = :idproduit"),
-    @NamedQuery(name = "Panier.findByEstvalide", query = "SELECT p FROM Panier p WHERE p.estvalide = :estvalide")})
+    @NamedQuery(name = "Panier.findByEstvalide", query = "SELECT p FROM Panier p WHERE p.estvalide = :estvalide"),
+    @NamedQuery(name = "Panier.findByIdproduit", query = "SELECT p FROM Panier p WHERE p.idproduit = :idproduit")})
 public class Panier implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,12 +50,12 @@ public class Panier implements Serializable {
     @Column(name = "datepanier")
     @Temporal(TemporalType.DATE)
     private Date datepanier;
+    @Column(name = "estvalide")
+    private Boolean estvalide;
     @Basic(optional = false)
     @NotNull
     @Column(name = "idproduit")
     private int idproduit;
-    @Column(name = "estvalide")
-    private Boolean estvalide;
     @JoinColumn(name = "idcustomer", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Customer idcustomer;
@@ -89,20 +89,20 @@ public class Panier implements Serializable {
         this.datepanier = datepanier;
     }
 
-    public int getIdproduit() {
-        return idproduit;
-    }
-
-    public void setIdproduit(int idproduit) {
-        this.idproduit = idproduit;
-    }
-
     public Boolean getEstvalide() {
         return estvalide;
     }
 
     public void setEstvalide(Boolean estvalide) {
         this.estvalide = estvalide;
+    }
+
+    public int getIdproduit() {
+        return idproduit;
+    }
+
+    public void setIdproduit(int idproduit) {
+        this.idproduit = idproduit;
     }
 
     public Customer getIdcustomer() {

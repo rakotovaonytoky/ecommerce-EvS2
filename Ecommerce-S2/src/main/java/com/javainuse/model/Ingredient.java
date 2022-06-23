@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,13 +27,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author U
  */
 @Entity
-@Table(name = "detailspanier", catalog = "ecommerce", schema = "postgres")
+@Table(name = "ingredient", catalog = "ecommerce", schema = "postgres")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Detailspanier.findAll", query = "SELECT d FROM Detailspanier d"),
-    @NamedQuery(name = "Detailspanier.findById", query = "SELECT d FROM Detailspanier d WHERE d.id = :id"),
-    @NamedQuery(name = "Detailspanier.findByIdpanier", query = "SELECT d FROM Detailspanier d WHERE d.idpanier = :idpanier")})
-public class Detailspanier implements Serializable {
+    @NamedQuery(name = "Ingredient.findAll", query = "SELECT i FROM Ingredient i"),
+    @NamedQuery(name = "Ingredient.findById", query = "SELECT i FROM Ingredient i WHERE i.id = :id"),
+    @NamedQuery(name = "Ingredient.findByQte", query = "SELECT i FROM Ingredient i WHERE i.qte = :qte")})
+public class Ingredient implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,22 +43,26 @@ public class Detailspanier implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idpanier")
-    private int idpanier;
+    @Size(min = 1, max = 60)
+    @Column(name = "qte")
+    private String qte;
     @JoinColumn(name = "idproduit", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Produit idproduit;
+    @JoinColumn(name = "idrecette", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Recette idrecette;
 
-    public Detailspanier() {
+    public Ingredient() {
     }
 
-    public Detailspanier(Integer id) {
+    public Ingredient(Integer id) {
         this.id = id;
     }
 
-    public Detailspanier(Integer id, int idpanier) {
+    public Ingredient(Integer id, String qte) {
         this.id = id;
-        this.idpanier = idpanier;
+        this.qte = qte;
     }
 
     public Integer getId() {
@@ -68,12 +73,12 @@ public class Detailspanier implements Serializable {
         this.id = id;
     }
 
-    public int getIdpanier() {
-        return idpanier;
+    public String getQte() {
+        return qte;
     }
 
-    public void setIdpanier(int idpanier) {
-        this.idpanier = idpanier;
+    public void setQte(String qte) {
+        this.qte = qte;
     }
 
     public Produit getIdproduit() {
@@ -82,6 +87,14 @@ public class Detailspanier implements Serializable {
 
     public void setIdproduit(Produit idproduit) {
         this.idproduit = idproduit;
+    }
+
+    public Recette getIdrecette() {
+        return idrecette;
+    }
+
+    public void setIdrecette(Recette idrecette) {
+        this.idrecette = idrecette;
     }
 
     @Override
@@ -94,10 +107,10 @@ public class Detailspanier implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Detailspanier)) {
+        if (!(object instanceof Ingredient)) {
             return false;
         }
-        Detailspanier other = (Detailspanier) object;
+        Ingredient other = (Ingredient) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -106,7 +119,7 @@ public class Detailspanier implements Serializable {
 
     @Override
     public String toString() {
-        return "com.javainuse.model.Detailspanier[ id=" + id + " ]";
+        return "com.javainuse.model.Ingredient[ id=" + id + " ]";
     }
     
 }

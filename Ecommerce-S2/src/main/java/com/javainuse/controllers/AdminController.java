@@ -5,7 +5,9 @@
  */
 package com.javainuse.controllers;
 
+import com.javainuse.model.Ingredient;
 import com.javainuse.model.Produit;
+import com.javainuse.model.Recette;
 import com.javainuse.service.OtherService;
 import com.javainuse.service.ProduitService;
 import java.io.BufferedOutputStream;
@@ -13,6 +15,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -79,7 +83,7 @@ public class AdminController {
             produitService.addProductImage(file1, "D:\\NetBeans12\\Ecommerce-S2\\src\\main\\webapp\\resources\\images\\");
             produitService.addProductImage(file2, "D:\\NetBeans12\\Ecommerce-S2\\src\\main\\webapp\\resources\\images\\");
             produitService.addProductImage(file3, "D:\\NetBeans12\\Ecommerce-S2\\src\\main\\webapp\\resources\\images\\");
-            produitService.addProductImage(file4, "D:\\NetBeans12\\Ecommerce-S2\\src\\main\\webapp\\resources\\images\\");            
+            produitService.addProductImage(file4, "D:\\NetBeans12\\Ecommerce-S2\\src\\main\\webapp\\resources\\images\\");
             produitService.insert(p);
         } catch (Exception e) {
             System.out.print(e.getMessage());
@@ -87,24 +91,79 @@ public class AdminController {
         ModelAndView m = new ModelAndView("addproduct");
         return m;
     }
-    
+
     @GetMapping("modify")
-    public ModelAndView loadModifyProduct(){
+    public ModelAndView loadModifyProduct() {
         return new ModelAndView("modify");
     }
-    
+
     @GetMapping("searchingProduct")
-    public ModelAndView SearchProductModifyProduct( @RequestParam String nom){
-        ModelAndView m= new ModelAndView("modify");
+    public ModelAndView SearchProductModifyProduct(@RequestParam String nom) {
+        ModelAndView m = new ModelAndView("modify");
         m.addObject("listproduit", produitService.findProduitByName(nom));
         return m;
     }
-    
-   
+
     @GetMapping("validPortfolio")
-    public ModelAndView showAllPortfolio(){
-        ModelAndView m= new ModelAndView("adminPortfolio");
+    public ModelAndView showAllPortfolio() {
+        ModelAndView m = new ModelAndView("adminPortfolio");
         m.addObject("listproduit", otherservice.findPortefeuilleByEtat("attente"));
         return m;
+    }
+
+    @GetMapping("/adminRecette")
+    public String loadAddRecettePage() {
+        return "adminaddRecette";
+    }
+
+    @GetMapping("/ProcessaddRecette")
+    public ModelAndView processloadAddRecettePage(@RequestParam String nom, @RequestParam String description) {
+        ModelAndView m = new ModelAndView("adminaddRecette");
+        Recette c = new Recette();
+        try {
+            c.setNom(nom);
+            c.setDescription(description);
+            c = otherservice.insertRecette(c);
+            m.addObject("recette", c);
+            m.addObject("Recettesuccess", "recette ajoutés avec success,ajoutez les ingredients maintenant");
+        } catch (Exception e) {
+            m.addObject("RecetteError", "echec d'ajout recette");
+
+            throw e;
+        }
+
+        return m;
+    }
+
+    @GetMapping("ProcessaddIngredients")
+    public ModelAndView processAddIngredients(@RequestParam String Idrecette, @RequestParam String nomProduit, @RequestParam String qte) {
+        ModelAndView m = new ModelAndView("adminaddRecette");
+        Recette r =  otherservice.findRecetteById(Integer.parseInt(Idrecette));
+    List<Produit> listp=produitService.findProduitByName(nomProduit);
+        try {
+            Ingredient i = new Ingredient();
+            i.setIdproduit(listp.get(0));
+            i.setIdrecette(r);
+            i.setQte(qte);
+            otherservice.insertIngredient(i);
+            m.addObject("recette", r);
+        } catch (Exception e) {
+            throw e;
+        }
+        return m;
+    }
+
+    @GetMapping("autocompleteIngredients")
+    @ResponseBody
+    public String inputAutoCompleteIngredients(@RequestParam String nom) {
+
+        String result = "";
+        List<Produit> listproduit = produitService.findProduitByName(nom);
+        if (listproduit.size() > 0) {
+            for (int i = 0; i < listproduit.size(); i++) {
+                result += "<option value='" + listproduit.get(i).getNom() + "'>";
+            }
+        }
+        return result;
     }
 }

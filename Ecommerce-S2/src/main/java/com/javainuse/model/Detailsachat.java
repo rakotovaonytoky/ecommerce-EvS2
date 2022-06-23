@@ -6,6 +6,7 @@
 package com.javainuse.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,12 +27,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author U
  */
 @Entity
-@Table(name = "detailsachat", catalog = "ecommerce", schema = "POSTGRES")
+@Table(name = "detailsachat", catalog = "ecommerce", schema = "postgres")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Detailsachat.findAll", query = "SELECT d FROM Detailsachat d"),
     @NamedQuery(name = "Detailsachat.findById", query = "SELECT d FROM Detailsachat d WHERE d.id = :id"),
-    @NamedQuery(name = "Detailsachat.findByIdachat", query = "SELECT d FROM Detailsachat d WHERE d.idachat = :idachat")})
+    @NamedQuery(name = "Detailsachat.findByIdachat", query = "SELECT d FROM Detailsachat d WHERE d.idachat = :idachat"),
+    @NamedQuery(name = "Detailsachat.findByQteachete", query = "SELECT d FROM Detailsachat d WHERE d.qteachete = :qteachete")})
 public class Detailsachat implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,6 +46,9 @@ public class Detailsachat implements Serializable {
     @NotNull
     @Column(name = "idachat")
     private int idachat;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "qteachete")
+    private BigDecimal qteachete;
     @JoinColumn(name = "idproduit", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Produit idproduit;
@@ -74,6 +79,14 @@ public class Detailsachat implements Serializable {
 
     public void setIdachat(int idachat) {
         this.idachat = idachat;
+    }
+
+    public BigDecimal getQteachete() {
+        return qteachete;
+    }
+
+    public void setQteachete(BigDecimal qteachete) {
+        this.qteachete = qteachete;
     }
 
     public Produit getIdproduit() {

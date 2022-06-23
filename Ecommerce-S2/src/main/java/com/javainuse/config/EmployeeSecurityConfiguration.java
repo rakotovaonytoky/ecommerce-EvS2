@@ -51,7 +51,7 @@ public class EmployeeSecurityConfiguration extends WebSecurityConfigurerAdapter 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/","/register","/resources/**","/customer/shop","/customer/searchingProduct","/customer/details").permitAll()
+        http.authorizeRequests().antMatchers("/","/register","/resources/**","/customer/shop","/customer/searchingProduct","/customer/details","/customer/recetteDetails").permitAll()
                 .antMatchers("/customer/**","/welcome","/getEmployees").hasAnyRole("USER", "ADMIN")
 //                .antMatchers("/getEmployees").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/**","/addNewEmployee").hasAnyRole("ADMIN").anyRequest().authenticated().and().formLogin().loginPage("/login").successHandler(successHandler)

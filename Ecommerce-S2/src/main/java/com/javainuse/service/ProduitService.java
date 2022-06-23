@@ -176,7 +176,7 @@ public class ProduitService {
     }
     public void checkQteProduit(List<ProductQuantity> listp){
         for(ProductQuantity p: listp){
-            if(p.getQte() > findProduitById(p.getId()).getQte()){
+            if(p.getQte() > findProduitById(p.getId()).getQte().intValue()){
                 throw new RuntimeException("qte insuffisant dans le stock");
                 
             }
@@ -187,11 +187,11 @@ public class ProduitService {
          for(ProductQuantity p: listp){
             Produit pd=findProduitById(p.getId());
             Mvstock mvt=new Mvstock();
-            mvt.setEtat(p.getQte() * -1);
+            mvt.setEtat( new BigDecimal(p.getQte() * -1));
             mvt.setIdproduit(pd);
             mvt.setDatemvtstock(new Date());
             mvtStockRepository.save(mvt);
-            pd.setQte(pd.getQte() - p.getQte());
+            pd.setQte(new BigDecimal((pd.getQte().intValue() - p.getQte())));
             produitRepository.save(pd);
          }  
             
@@ -216,6 +216,7 @@ public class ProduitService {
     public void substractCustomerPortfolio(List<Produit> listproduit,Customer c){
         Integer sum=getTotalProductPrice( listproduit);
         c.setSolde(c.getSolde() - sum);
+        customerRepository.save(c);
     }
     
 }

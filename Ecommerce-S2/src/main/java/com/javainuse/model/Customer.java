@@ -29,18 +29,15 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author U
  */
 @Entity
-@Table(name = "customer", catalog = "ecommerce", schema = "POSTGRES")
+@Table(name = "customer", catalog = "ecommerce", schema = "postgres")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
     @NamedQuery(name = "Customer.findById", query = "SELECT c FROM Customer c WHERE c.id = :id"),
-    @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name"),
     @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
+    @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name"),
     @NamedQuery(name = "Customer.findBySolde", query = "SELECT c FROM Customer c WHERE c.solde = :solde")})
 public class Customer implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcustomer", fetch = FetchType.LAZY)
-    private List<Portefeuille> portefeuilleList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,21 +45,23 @@ public class Customer implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "name")
-    private String name;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "email")
     private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "name")
+    private String name;
     @Column(name = "solde")
     private Integer solde;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcustomer", fetch = FetchType.LAZY)
     private List<Panier> panierList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcustomer", fetch = FetchType.LAZY)
+    private List<Portefeuille> portefeuilleList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcustomer", fetch = FetchType.LAZY)
     private List<Achat> achatList;
 
@@ -73,10 +72,10 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    public Customer(Integer id, String name, String email) {
+    public Customer(Integer id, String email, String name) {
         this.id = id;
-        this.name = name;
         this.email = email;
+        this.name = name;
     }
 
     public Integer getId() {
@@ -87,20 +86,20 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getSolde() {
@@ -118,6 +117,15 @@ public class Customer implements Serializable {
 
     public void setPanierList(List<Panier> panierList) {
         this.panierList = panierList;
+    }
+
+    @XmlTransient
+    public List<Portefeuille> getPortefeuilleList() {
+        return portefeuilleList;
+    }
+
+    public void setPortefeuilleList(List<Portefeuille> portefeuilleList) {
+        this.portefeuilleList = portefeuilleList;
     }
 
     @XmlTransient
@@ -152,15 +160,6 @@ public class Customer implements Serializable {
     @Override
     public String toString() {
         return "com.javainuse.model.Customer[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public List<Portefeuille> getPortefeuilleList() {
-        return portefeuilleList;
-    }
-
-    public void setPortefeuilleList(List<Portefeuille> portefeuilleList) {
-        this.portefeuilleList = portefeuilleList;
     }
     
 }

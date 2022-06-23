@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author U
  */
 @Entity
-@Table(name = "achat", catalog = "ecommerce", schema = "POSTGRES")
+@Table(name = "achat", catalog = "ecommerce", schema = "postgres")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Achat.findAll", query = "SELECT a FROM Achat a"),

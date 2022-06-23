@@ -32,44 +32,31 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author U
  */
 @Entity
-@Table(name = "produit", catalog = "ecommerce", schema = "POSTGRES")
+@Table(name = "produit", catalog = "ecommerce", schema = "postgres")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Produit.findAll", query = "SELECT p FROM Produit p"),
     @NamedQuery(name = "Produit.findById", query = "SELECT p FROM Produit p WHERE p.id = :id"),
-    @NamedQuery(name = "Produit.findByNom", query = "SELECT p FROM Produit p WHERE p.nom = :nom"),
     @NamedQuery(name = "Produit.findByDescription", query = "SELECT p FROM Produit p WHERE p.description = :description"),
-    @NamedQuery(name = "Produit.findByPrix", query = "SELECT p FROM Produit p WHERE p.prix = :prix"),
     @NamedQuery(name = "Produit.findByImage1", query = "SELECT p FROM Produit p WHERE p.image1 = :image1"),
     @NamedQuery(name = "Produit.findByImage2", query = "SELECT p FROM Produit p WHERE p.image2 = :image2"),
     @NamedQuery(name = "Produit.findByImage3", query = "SELECT p FROM Produit p WHERE p.image3 = :image3"),
-    @NamedQuery(name = "Produit.findByImage4", query = "SELECT p FROM Produit p WHERE p.image4 = :image4")})
+    @NamedQuery(name = "Produit.findByImage4", query = "SELECT p FROM Produit p WHERE p.image4 = :image4"),
+    @NamedQuery(name = "Produit.findByNom", query = "SELECT p FROM Produit p WHERE p.nom = :nom"),
+    @NamedQuery(name = "Produit.findByPrix", query = "SELECT p FROM Produit p WHERE p.prix = :prix"),
+    @NamedQuery(name = "Produit.findByQte", query = "SELECT p FROM Produit p WHERE p.qte = :qte"),
+    @NamedQuery(name = "Produit.findByQteenvente", query = "SELECT p FROM Produit p WHERE p.qteenvente = :qteenvente")})
 public class Produit implements Serializable {
-
-    @Column(name = "qte")
-    private Integer qte;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproduit", fetch = FetchType.LAZY)
-    private List<Mvstock> mvstockList;
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-     Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "nom")
-    private String nom;
-    @Size(max = 2147483647)
+    private Integer id;
+    @Size(max = 255)
     @Column(name = "description")
     private String description;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "prix")
-    private BigDecimal prix;
     @Size(max = 50)
     @Column(name = "image1")
     private String image1;
@@ -82,6 +69,25 @@ public class Produit implements Serializable {
     @Size(max = 50)
     @Column(name = "image4")
     private String image4;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "nom")
+    private String nom;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "prix")
+    private BigDecimal prix;
+    @Column(name = "qte")
+    private BigDecimal qte;
+    @Size(max = 60)
+    @Column(name = "qteenvente")
+    private String qteenvente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproduit", fetch = FetchType.LAZY)
+    private List<Ingredient> ingredientList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproduit", fetch = FetchType.LAZY)
+    private List<Mvstock> mvstockList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproduit", fetch = FetchType.LAZY)
     private List<Detailsachat> detailsachatList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproduit", fetch = FetchType.LAZY)
@@ -89,7 +95,6 @@ public class Produit implements Serializable {
     @JoinColumn(name = "idcategorie", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Categorie idcategorie;
-    
 
     public Produit() {
     }
@@ -112,28 +117,12 @@ public class Produit implements Serializable {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public BigDecimal getPrix() {
-        return prix;
-    }
-
-    public void setPrix(BigDecimal prix) {
-        this.prix = prix;
     }
 
     public String getImage1() {
@@ -166,6 +155,56 @@ public class Produit implements Serializable {
 
     public void setImage4(String image4) {
         this.image4 = image4;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public BigDecimal getPrix() {
+        return prix;
+    }
+
+    public void setPrix(BigDecimal prix) {
+        this.prix = prix;
+    }
+
+    public BigDecimal getQte() {
+        return qte;
+    }
+
+    public void setQte(BigDecimal qte) {
+        this.qte = qte;
+    }
+
+    public String getQteenvente() {
+        return qteenvente;
+    }
+
+    public void setQteenvente(String qteenvente) {
+        this.qteenvente = qteenvente;
+    }
+
+    @XmlTransient
+    public List<Ingredient> getIngredientList() {
+        return ingredientList;
+    }
+
+    public void setIngredientList(List<Ingredient> ingredientList) {
+        this.ingredientList = ingredientList;
+    }
+
+    @XmlTransient
+    public List<Mvstock> getMvstockList() {
+        return mvstockList;
+    }
+
+    public void setMvstockList(List<Mvstock> mvstockList) {
+        this.mvstockList = mvstockList;
     }
 
     @XmlTransient
@@ -217,32 +256,6 @@ public class Produit implements Serializable {
     @Override
     public String toString() {
         return "com.javainuse.model.Produit[ id=" + id + " ]";
-    }
-
-    public Integer getQte() {
-        return qte;
-    }
-
-    public void setQte(Integer qte) {
-        this.qte = qte;
-    }
-
-    @XmlTransient
-    public List<Mvstock> getMvstockList() {
-        return mvstockList;
-    }
-
-    public void setMvstockList(List<Mvstock> mvstockList) {
-        this.mvstockList = mvstockList;
-    }
-    public Integer quantityWithMvt(){
-        Integer sum=0;
-        if(mvstockList.size() >0){
-            for(Mvstock m : mvstockList){
-                sum+=m.getEtat();
-            }
-        }
-        return sum;
     }
     
 }

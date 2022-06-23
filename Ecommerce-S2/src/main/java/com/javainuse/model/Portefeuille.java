@@ -78,9 +78,6 @@ public class Portefeuille implements Serializable {
     }
 
     public void setMontant(int montant) {
-        if(montant <0){
-            throw new RuntimeException("montant ne peut etre <0");
-        }
         this.montant = montant;
     }
 

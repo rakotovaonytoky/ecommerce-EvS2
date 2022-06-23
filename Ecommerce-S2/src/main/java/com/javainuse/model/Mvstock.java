@@ -6,6 +6,7 @@
 package com.javainuse.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -49,10 +50,11 @@ public class Mvstock implements Serializable {
     @Column(name = "datemvtstock")
     @Temporal(TemporalType.DATE)
     private Date datemvtstock;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "etat")
-    private int etat;
+    private BigDecimal etat;
     @JoinColumn(name = "idproduit", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Produit idproduit;
@@ -64,7 +66,7 @@ public class Mvstock implements Serializable {
         this.id = id;
     }
 
-    public Mvstock(Integer id, Date datemvtstock, int etat) {
+    public Mvstock(Integer id, Date datemvtstock, BigDecimal etat) {
         this.id = id;
         this.datemvtstock = datemvtstock;
         this.etat = etat;
@@ -86,11 +88,11 @@ public class Mvstock implements Serializable {
         this.datemvtstock = datemvtstock;
     }
 
-    public int getEtat() {
+    public BigDecimal getEtat() {
         return etat;
     }
 
-    public void setEtat(int etat) {
+    public void setEtat(BigDecimal etat) {
         this.etat = etat;
     }
 

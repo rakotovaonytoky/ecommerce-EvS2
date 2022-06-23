@@ -29,13 +29,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author U
  */
 @Entity
-@Table(name = "categorie", catalog = "ecommerce", schema = "postgres")
+@Table(name = "recette", catalog = "ecommerce", schema = "postgres")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Categorie.findAll", query = "SELECT c FROM Categorie c"),
-    @NamedQuery(name = "Categorie.findById", query = "SELECT c FROM Categorie c WHERE c.id = :id"),
-    @NamedQuery(name = "Categorie.findByNom", query = "SELECT c FROM Categorie c WHERE c.nom = :nom")})
-public class Categorie implements Serializable {
+    @NamedQuery(name = "Recette.findAll", query = "SELECT r FROM Recette r"),
+    @NamedQuery(name = "Recette.findById", query = "SELECT r FROM Recette r WHERE r.id = :id"),
+    @NamedQuery(name = "Recette.findByNom", query = "SELECT r FROM Recette r WHERE r.nom = :nom"),
+    @NamedQuery(name = "Recette.findByQterecette", query = "SELECT r FROM Recette r WHERE r.qterecette = :qterecette")})
+public class Recette implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,20 +46,35 @@ public class Categorie implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 60)
     @Column(name = "nom")
     private String nom;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcategorie", fetch = FetchType.LAZY)
-    private List<Produit> produitList;
+    @Size(max = 60)
+    @Column(name = "qterecette")
+    private String qterecette;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idrecette", fetch = FetchType.LAZY)
+    private List<Ingredient> ingredientList;
+    @Size(max = 255)
+    @Column(name = "description")
+    private String description;
 
-    public Categorie() {
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Categorie(Integer id) {
+    public String getDescription() {
+        return description;
+    }
+    
+
+    public Recette() {
+    }
+
+    public Recette(Integer id) {
         this.id = id;
     }
 
-    public Categorie(Integer id, String nom) {
+    public Recette(Integer id, String nom) {
         this.id = id;
         this.nom = nom;
     }
@@ -79,13 +95,21 @@ public class Categorie implements Serializable {
         this.nom = nom;
     }
 
-    @XmlTransient
-    public List<Produit> getProduitList() {
-        return produitList;
+    public String getQterecette() {
+        return qterecette;
     }
 
-    public void setProduitList(List<Produit> produitList) {
-        this.produitList = produitList;
+    public void setQterecette(String qterecette) {
+        this.qterecette = qterecette;
+    }
+
+    @XmlTransient
+    public List<Ingredient> getIngredientList() {
+        return ingredientList;
+    }
+
+    public void setIngredientList(List<Ingredient> ingredientList) {
+        this.ingredientList = ingredientList;
     }
 
     @Override
@@ -98,10 +122,10 @@ public class Categorie implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Categorie)) {
+        if (!(object instanceof Recette)) {
             return false;
         }
-        Categorie other = (Categorie) object;
+        Recette other = (Recette) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -110,7 +134,7 @@ public class Categorie implements Serializable {
 
     @Override
     public String toString() {
-        return "com.javainuse.model.Categorie[ id=" + id + " ]";
+        return "com.javainuse.model.Recette[ id=" + id + " ]";
     }
     
 }

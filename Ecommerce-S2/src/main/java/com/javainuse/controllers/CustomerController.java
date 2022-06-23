@@ -9,6 +9,7 @@ import com.javainuse.config.util.ProductQuantity;
 import com.javainuse.model.Customer;
 import com.javainuse.model.Portefeuille;
 import com.javainuse.model.Produit;
+import com.javainuse.service.OtherService;
 import com.javainuse.service.ProduitService;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -38,11 +39,14 @@ public class CustomerController {
 
     @Autowired
     private ProduitService produitService;
+    @Autowired
+    private OtherService otherservice;
 
     @GetMapping("shop")
     public ModelAndView loadShopPage(@RequestParam(required = false) String id) {
         ModelAndView m = new ModelAndView("shop");
         m.addObject("categories", produitService.findAllCategorie());
+        m.addObject("recettes", otherservice.findAllRecette());
         if (id == null) {
             m.addObject("listproduit", produitService.findProductByCategorie(1));
 
@@ -134,6 +138,7 @@ public class CustomerController {
         }
         return result;
     }
+   
 
     @GetMapping("loadMoneyPage")
     public String loaddMoney() {
@@ -163,6 +168,12 @@ public class CustomerController {
             }
             m.setViewName("portfolio");
         }
+        return m;
+    }
+    @GetMapping("recetteDetails")
+    public ModelAndView recetteDetails(@RequestParam String id){
+        ModelAndView m=new ModelAndView("recetteDetails");
+        m.addObject("recetteDetails", otherservice.findRecetteById(Integer.parseInt(id)));
         return m;
     }
 }
