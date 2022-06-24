@@ -14,6 +14,7 @@
     <class>com.javainuse.model.Mvstock</class>
     <class>com.javainuse.model.Recette</class>
     <class>com.javainuse.model.Ingredient</class>
+    <class>com.javainuse.model.Statachat</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bootdb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

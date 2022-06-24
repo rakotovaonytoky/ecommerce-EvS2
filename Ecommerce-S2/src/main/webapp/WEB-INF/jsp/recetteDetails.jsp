@@ -10,7 +10,7 @@
            if(request.getAttribute(key)!=null){
          Recette p=(Recette)request.getAttribute(key);   
         %>
-        <form name="cart">
+        <form >
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="col-md-6">
                     <!--<img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." />-->
@@ -47,11 +47,23 @@
                         <%=p.getDescription()%>
                     </p>
                     <div class="d-flex">
-                        <input type="hidden" name="id" value="<%=p.getId() %>">
-                        <input type="hidden" name="nom" value="<%=p.getNom() %>">
-                        
-                        <input class="form-control text-center me-3" id="inputQuantity" name="quantite" type="number" value="1" style="max-width: 4em" />
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="SaveItem()">
+                        <% List<Ingredient> listIndredient=p.getIngredientList();
+                         if(listIndredient.size()>0){ %>
+                         <input type="hidden" id="nbinbputT" value="<%=listIndredient.size()%>"/>
+                          <%   for(int i=0;i<listIndredient.size();i++){
+                        %>
+                        <input type="hidden" id="id<%=i %>" value="<%=listIndredient.get(i).getIdproduit().getId() %>">
+                        <input type="hidden" id="prix<%=i %>" value="<%=listIndredient.get(i).getIdproduit().getPrix() %>">
+                        <input type="hidden" id="qteEnvte<%=i %>" value="<%=listIndredient.get(i).getIdproduit().getQteenvente() %>">
+                        <input type="hidden" id="nom<%=i %>" value="<%=listIndredient.get(i).getIdproduit().getNom() %>">
+                        <input type="hidden" id="qteIngredient<%=i %>" value="<%=listIndredient.get(i).getQte() %>">
+                        <% }} %>
+                        <input class="form-control text-center me-3"  id="quantite" type="number" value="1" style="max-width: 4em" />
+<!--                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="SaveItem()">
+                            <i class="bi-cart-fill me-1"></i>
+                            Add to cart
+                        </button>-->
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="SaveItemRelease()">
                             <i class="bi-cart-fill me-1"></i>
                             Add to cart
                         </button>

@@ -8,9 +8,11 @@ package com.javainuse.service;
 import com.javainuse.dao.IngredientRepository;
 import com.javainuse.dao.PortefeuilleRepository;
 import com.javainuse.dao.RecetteRepository;
+import com.javainuse.dao.StatachatRepository;
 import com.javainuse.model.Ingredient;
 import com.javainuse.model.Portefeuille;
 import com.javainuse.model.Recette;
+import com.javainuse.model.Statachat;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class OtherService {
     private RecetteRepository recetteRepository;
     @Autowired
     private IngredientRepository ingredientRepository;
+    @Autowired
+    private StatachatRepository statachatRepository;
     
     public List<Portefeuille> findPortefeuilleByEtat(String etat){
         List<Portefeuille> list=new ArrayList<>();
@@ -48,5 +52,8 @@ public class OtherService {
     }
     public List<Recette> findAllRecette(){
         return recetteRepository.findAll();
+    }
+    public List<Statachat> statProduit(){
+        return statachatRepository.findAll();
     }
 }
