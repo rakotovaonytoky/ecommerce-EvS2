@@ -88,7 +88,8 @@ public class CustomerController {
     }
 
     @GetMapping("panier")
-    public String getPanier(Principal principal, HttpServletRequest req) {
+    public ModelAndView getPanier(Principal principal, HttpServletRequest req) {
+        ModelAndView m=new ModelAndView("redirect:/customer/");
         if (principal == null) {
             String redirect = "redirect:/";
             new ModelAndView(redirect);
@@ -117,12 +118,15 @@ public class CustomerController {
 //            Mampiditra dans achat
             produitService.insertAchatWhenValidCart(listp, c);
 //            Mbola mila asina mouvement de stock
+            m.addObject("Paniermessage", "ajout avec succces");
         }catch(Exception e){
+            m.addObject("Paniermessage", e.getMessage());
+
 //            e.printStackTrace();
             throw e;
 //            System.out.print(e.getMessage());
         }
-        return "test";
+        return m;
     }
 
     @GetMapping("autocomplete")

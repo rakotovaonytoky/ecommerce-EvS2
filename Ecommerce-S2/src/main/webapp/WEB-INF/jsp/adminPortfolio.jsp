@@ -30,7 +30,7 @@
                         <button class="btn btn-primary" id="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
                     </div>
                 </form>
-                    <%  String key="listproduit";
+                    <%  String key="key";
                         if(request.getAttribute(key)!=null){
                         List<Portefeuille> listp=(List<Portefeuille>)request.getAttribute(key);
                     %>
@@ -52,7 +52,8 @@
                             <th scope="row"><%=p.getIdcustomer().getName() %></th>
                             <td><%=p.getMontant() %></td>
                             <td><%=p.getEtat() %></td>
-                            <td><a class="btn btn-primary">Valider</a></td>
+                            <td>
+                                <a class="btn btn-primary" href="<%= request.getContextPath() %>/admin/updatePortefeuille?idcustomer=<%=p.getIdcustomer().getId() %>">Valider</a></td>
                             
                             
                         </tr>

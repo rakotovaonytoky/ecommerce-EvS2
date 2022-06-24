@@ -271,6 +271,71 @@ var getid = document.getElementById("id" + i);
 }
 return result;
         }
+//function insertInChart(listIngredient){
+////    liste produit vide
+//        var produitAjouter = JSON.parse(localStorage.getItem("produit"));
+//        if(produitAjouter==null) produitAjouter=[];
+//                var produitReste = JSON.parse(localStorage.getItem("resteProduit"));
+//                 if(produitReste==null) produitReste=[];
+//                var qteDemandeClient = parseInt(document.getElementById("quantite").value);
+//                for (let i = 0; i < listIngredient.length; i++) {
+//            var resteEnStock = JSON.parse(localStorage.getItem("resteProduit"));
+//                    if (resteEnStock !== null){
+//            for (let j = 0; j < resteEnStock.length; j++){
+//                if (listIngredient[i].id == resteEnStock[j].id){
+//                    var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) * qteDemandeClient) - resteEnStock[j].reste;
+//                            checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
+//                    }
+//                    }
+//                }
+//                else if (produitReste.length >0){
+//                    for(let l=0;l<produitReste.length;l++){
+//                        if(listIngredient[i].id == produitReste[l].id){
+//                            console.log("mandalove ato ohhh");
+//                             var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) * qteDemandeClient) - produitReste[l].reste;
+//                        checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
+//                        
+//                        }    
+//                    }
+//
+//                }
+//                else{
+//                var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) * qteDemandeClient);
+//                        checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
+//                }
+//        }
+//        console.log("------");
+//                console.log(produitAjouter);
+//                console.log("----Reste--");
+//                console.log(produitReste);
+//// manao grouBy produitAjouter
+//  var groupByProduitAjouter = [];
+//            produitAjouter.reduce(function (res, value) {
+//                if (!res[value.id]) {
+//                    res[value.id] = { id: value.id, qte: 0 ,nom:value.nom,prix:value.prix};
+//                    groupByProduitAjouter.push(res[value.id])
+//                }
+//                res[value.id].qte += value.qte;
+//                return res;
+//            }, {});
+//            console.log(groupByProduitAjouter);
+//// manao groupby produitreste
+//  var groupByReste = [];
+//            produitReste.reduce(function (res, value) {
+//                if (!res[value.id]) {
+//                    res[value.id] = { id: value.id, reste: 0 };
+//                    groupByReste.push(res[value.id])
+//                }
+//                res[value.id].text += value.text;
+//                return res;
+//            }, {});
+//            console.log(groupByReste);
+////insertion localStorage produitAjouter
+// localStorage.setItem("produit", JSON.stringify(groupByProduitAjouter));
+////insertion localStorage produitReste
+// localStorage.setItem("resteProduit", JSON.stringify(groupByReste));
+//    }
+//        vaovao
 function insertInChart(listIngredient){
 //    liste produit vide
         var produitAjouter = JSON.parse(localStorage.getItem("produit"));
@@ -283,7 +348,8 @@ function insertInChart(listIngredient){
                     if (resteEnStock !== null){
             for (let j = 0; j < resteEnStock.length; j++){
                 if (listIngredient[i].id == resteEnStock[j].id){
-                    var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) * qteDemandeClient) - resteEnStock[j].reste;
+                    console.log("misy reste en stock localStorage");
+                    var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) ) - resteEnStock[j].reste;
                             checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
                     }
                     }
@@ -292,7 +358,7 @@ function insertInChart(listIngredient){
                     for(let l=0;l<produitReste.length;l++){
                         if(listIngredient[i].id == produitReste[l].id){
                             console.log("mandalove ato ohhh");
-                             var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) * qteDemandeClient) - produitReste[l].reste;
+                             var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte)) - produitReste[l].reste;
                         checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
                         
                         }    
@@ -300,9 +366,10 @@ function insertInChart(listIngredient){
 
                 }
                 else{
-                var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) * qteDemandeClient);
+                var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte));
                         checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
                 }
+                
         }
         console.log("------");
                 console.log(produitAjouter);
@@ -334,30 +401,40 @@ function insertInChart(listIngredient){
  localStorage.setItem("produit", JSON.stringify(groupByProduitAjouter));
 //insertion localStorage produitReste
  localStorage.setItem("resteProduit", JSON.stringify(groupByReste));
-
-        }
+    }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 function checkQuantiteIngredientsAndQteProd(qteIngredients, qteProd, produitAjouter, produitReste, element){
     var result = qteIngredients - qteProd;
     result =parseInt(result);
     console.log(qteIngredients +"-"+qteProd);
             if (result > 0){
-                let resultDivision = qteIngredients / qteProd;
-                        if (Number.isInteger(resultDivision)){
-                for (let k = 0; k < resultDivision; k++){
+//                let resultDivision = qteIngredients / qteProd;
+//                        if (Number.isInteger(resultDivision)){
+//                for (let k = 0; k < resultDivision; k++){
                 produitAjouter.push(element);
-                }
-                } else{
-                for (let k = 0; k < parseInt(resultDivision) + 1; k++){
-
-                produitAjouter.push(element);
-                }
+//                }
+//                } else{
+//                for (let k = 0; k < parseInt(resultDivision) + 1; k++){
+//
+//                produitAjouter.push(element);
+//                }
                 let reste = (resultDivision.toFixed(2)) - parseInt(resultDivision);
                         element = {
                         "id":element.id,
                                 "reste":reste
                         };
                         produitReste.push(element);
-                    }
+//                    }
         }else if(result == 0){
              produitAjouter.push(element);
         }else {

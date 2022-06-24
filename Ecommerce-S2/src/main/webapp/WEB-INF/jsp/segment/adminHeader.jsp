@@ -45,6 +45,7 @@
                                     <a class="nav-link" href="<%= request.getContextPath() %>/admin/add">Add product</a>
                                     <a class="nav-link" href="<%= request.getContextPath() %>/admin/modify">Modify Product</a>
                                     <a class="nav-link" href="<%= request.getContextPath() %>/admin/adminRecette">Add reciples</a>
+                                    <a class="nav-link" href="<%= request.getContextPath() %>/admin/ToPagePortefeuille">Gestion portefeuille</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">

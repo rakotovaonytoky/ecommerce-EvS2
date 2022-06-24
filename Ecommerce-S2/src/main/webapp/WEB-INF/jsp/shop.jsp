@@ -17,6 +17,15 @@
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
+                <% if(request.getAttribute("Paniermessage")!=null){
+                String message=(String)request.getAttribute("Paniermessage");
+                if(message.equals("ajout avec succces")){
+                %>
+                <div class="alert alert-success">
+                    <%%>
+                </div>
+                <% }else{ %>
+                <%} }%>
                  <h2 class="text-muted">Produit</h2>
                 <ul class="list-group-horizontal">
                         <% String categKey="categories";

@@ -166,4 +166,21 @@ public class AdminController {
         }
         return result;
     }
+    
+    @GetMapping("updatePortefeuille")
+    public ModelAndView updatePortefeuille(@RequestParam String idcustomer){
+      ModelAndView m=new ModelAndView() ;
+      try{
+          
+      }catch(Exception ex){
+          throw ex;
+      }
+      return m;
+    }
+    @GetMapping("ToPagePortefeuille")
+    public ModelAndView  toPagePortefeuille(){
+        ModelAndView m=new ModelAndView("adminPortfolio");
+        m.addObject("key", produitService.findPortefeuilleByEtat("attente"));
+        return m;
+    }
 }
