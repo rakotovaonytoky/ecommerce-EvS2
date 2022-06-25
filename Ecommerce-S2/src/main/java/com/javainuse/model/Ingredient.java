@@ -44,8 +44,14 @@ public class Ingredient implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 60)
-    @Column(name = "qte")
+    @Column(name = "pourcentage")
     private String qte;
+    @Column(name = "quantiteingredient")
+    private String qteIngredients;
+    @Column(name = "reste")
+    private String reste;
+    @Column(name = "nombreproduit")
+    private String nombreProduit;
     @JoinColumn(name = "idproduit", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Produit idproduit;
@@ -53,6 +59,33 @@ public class Ingredient implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Recette idrecette;
 
+    public String getNombreProduit() {
+        return nombreProduit;
+    }
+
+    public void setNombreProduit(String nombreProduit) {
+        this.nombreProduit = nombreProduit;
+    }
+    
+    
+
+    public String getQteIngredients() {
+        return qteIngredients;
+    }
+
+    public void setQteIngredients(String qteIngredients) {
+        this.qteIngredients = qteIngredients;
+    }
+
+    public String getReste() {
+        return reste;
+    }
+
+    public void setReste(String reste) {
+        this.reste = reste;
+    }
+
+    
     public Ingredient() {
     }
 
@@ -73,11 +106,11 @@ public class Ingredient implements Serializable {
         this.id = id;
     }
 
-    public String getQte() {
+    public String getPourcentage() {
         return qte;
     }
 
-    public void setQte(String qte) {
+    public void setPourcentage(String qte) {
         this.qte = qte;
     }
 

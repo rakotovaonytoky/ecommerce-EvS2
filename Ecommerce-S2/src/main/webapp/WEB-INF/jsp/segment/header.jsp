@@ -59,6 +59,7 @@
                         <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i class="fas fa-shopping-cart"></i>
                             Cart
+                            <!--<span id="total-product" onload="shoppingList()" class="badge bg-dark text-white ms-1 rounded-pill">0</span>-->
                             <span id="total-product" onload="shoppingList()" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                         </button>
                     </form>

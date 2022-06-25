@@ -144,7 +144,11 @@ public class AdminController {
             Ingredient i = new Ingredient();
             i.setIdproduit(listp.get(0));
             i.setIdrecette(r);
-            i.setQte(qte);
+            i.setQteIngredients(qte);
+            i.setPourcentage(otherservice.calculPourcentage(i.getQteIngredients(), listp.get(0).getQteenvente()));
+            String[] nombreProduitWithReste=otherservice.calculQuantiteProduitNecessaire(i.getQteIngredients(), listp.get(0).getQteenvente());
+            i.setNombreProduit(nombreProduitWithReste[0]);
+            i.setReste(nombreProduitWithReste[1]);
             otherservice.insertIngredient(i);
             m.addObject("recette", r);
         } catch (Exception e) {

@@ -69,7 +69,7 @@
                             </div>
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form4Example3">Quantite:</label>
-                                <input number class="form-control" id="form4Example3" pattern="[0-9]+"  name="qte" required/>
+                                <input number class="form-control" id="form4Example3"   name="qte" required/>
                             </div>
                             
 

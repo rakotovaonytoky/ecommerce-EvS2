@@ -215,7 +215,7 @@ var total=0;
             total=existingEntries.length;
             }
 ;
-//        number.textContent = total;
+        number.textContent = total;
         }
 //function checkProduitInCart(id) {
 //if (localStorage.length > 0){
@@ -255,15 +255,19 @@ var result = [];
         for (let i = 0; i < nbinput; i++) {
 var getid = document.getElementById("id" + i);
         var getprix = parseInt(document.getElementById("prix" + i).value);
-        var getqteEnvte = parseInt(document.getElementById("qteEnvte" + i).value);
+        var getqteEnvte = document.getElementById("qteEnvte" + i).value;
         var getnom = document.getElementById("nom" + i).value;
-        var getqteIngredient = parseInt(document.getElementById("qteIngredient" + i).value);
+        var getreste = document.getElementById("reste" + i).value;
+        var nombreIngredients = document.getElementById("nombreIngredients" + i).value;
+        var pourcentage = parseInt(document.getElementById("pourcentage" + i).value);
         var produit = {
         "id":getid.value,
                 "prix":getprix,
                 "nom":getnom,
                 "qteEnvte":getqteEnvte,
-                "qteIngredient":getqteIngredient,
+                "reste":getreste,
+                "nombreIngredients":nombreIngredients,
+                "pourcentage":pourcentage,
                 "qte":1,
         };
         result.push(produit);
@@ -343,33 +347,11 @@ function insertInChart(listIngredient){
                 var produitReste = JSON.parse(localStorage.getItem("resteProduit"));
                  if(produitReste==null) produitReste=[];
                 var qteDemandeClient = parseInt(document.getElementById("quantite").value);
-                for (let i = 0; i < listIngredient.length; i++) {
-            var resteEnStock = JSON.parse(localStorage.getItem("resteProduit"));
-                    if (resteEnStock !== null){
-            for (let j = 0; j < resteEnStock.length; j++){
-                if (listIngredient[i].id == resteEnStock[j].id){
-                    console.log("misy reste en stock localStorage");
-                    var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte)  ) - resteEnStock[j].reste;
-                            checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
-                    }
-                    }
-                }
-                else if (produitReste.length >0){
-                    for(let l=0;l<produitReste.length;l++){
-                        if(listIngredient[i].id == produitReste[l].id){
-                            console.log("mandalove ato ohhh");
-                             var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte)) - produitReste[l].reste;
-                        checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
-                        
-                        }    
-                    }
-
-                }
-                else{
-                var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte));
-                        checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
-                }
-                
+        for (let i = 0; i < listIngredient.length; i++) {
+                for (let j = 0; j < listIngredient[i].nombreIngredients; j++){
+                        produitAjouter.push(listIngredient[i]);
+                }        
+                produitReste.push(listIngredient[i]);
         }
         console.log("------");
                 console.log(produitAjouter);

@@ -56,7 +56,9 @@
                         <input type="hidden" id="prix<%=i %>" value="<%=listIndredient.get(i).getIdproduit().getPrix() %>">
                         <input type="hidden" id="qteEnvte<%=i %>" value="<%=listIndredient.get(i).getIdproduit().getQteenvente() %>">
                         <input type="hidden" id="nom<%=i %>" value="<%=listIndredient.get(i).getIdproduit().getNom() %>">
-                        <input type="hidden" id="qteIngredient<%=i %>" value="<%=listIndredient.get(i).getQte() %>">
+                        <input type="hidden" id="pourcentage<%=i %>" value="<%=listIndredient.get(i).getPourcentage() %>">
+                        <input type="hidden" id="nombreIngredients<%=i %>" value="<%=listIndredient.get(i).getNombreProduit() %>">
+                        <input type="hidden" id="reste<%=i %>" value="<%=listIndredient.get(i).getReste() %>">
                         <% }} %>
                         <input class="form-control text-center me-3"  id="quantite" type="number" value="1" style="max-width: 4em" />
 <!--                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="SaveItem()">

@@ -65,7 +65,7 @@
                             </h3>
                             <form action="/login" method="POST" class="login-form">
                                 <div class="form-group">
-                                    <input type="text" class="form-control rounded-left" placeholder="Username" name="username" required>
+                                    <input type="text" class="form-control rounded-left" placeholder="Username" name="username" value="" required>
                                 </div>
                                 <div class="form-group d-flex">
                                     <input type="password" class="form-control rounded-left" placeholder="Password" name="password" required>
