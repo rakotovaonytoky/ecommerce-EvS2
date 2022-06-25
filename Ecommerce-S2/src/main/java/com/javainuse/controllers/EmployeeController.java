@@ -72,12 +72,12 @@ public class EmployeeController {
     public ModelAndView processRegister(@ModelAttribute("user") UserRegistration userRegistrationObject) {
 
         // authorities to be granted
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        String encodedPassword = bCryptPasswordEncoder.encode(userRegistrationObject.getPassword());
-        User user = new User(userRegistrationObject.getUsername(), encodedPassword, authorities);
-        jdbcUserDetailsManager.createUser(user);
-        return new ModelAndView("redirect:/welcome");
+//        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+//        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+//        String encodedPassword = bCryptPasswordEncoder.encode(userRegistrationObject.getPassword());
+//        User user = new User(userRegistrationObject.getUsername(), encodedPassword, authorities);
+//        jdbcUserDetailsManager.createUser(user);
+        return new ModelAndView("redirect:/login");
     }
 
     @RequestMapping("/getEmployees")

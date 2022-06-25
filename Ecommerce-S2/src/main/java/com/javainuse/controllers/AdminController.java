@@ -169,12 +169,14 @@ public class AdminController {
     
     @GetMapping("updatePortefeuille")
     public ModelAndView updatePortefeuille(@RequestParam String idcustomer){
+//        idcustomer="1";
       ModelAndView m=new ModelAndView() ;
       try{
-          
+          produitService.findPortefeuilleByIdCustomerAndSet(produitService.findCustomerById(Integer.parseInt(idcustomer)));
       }catch(Exception ex){
           throw ex;
       }
+      m.setViewName("redirect:/customer/index");
       return m;
     }
     @GetMapping("ToPagePortefeuille")

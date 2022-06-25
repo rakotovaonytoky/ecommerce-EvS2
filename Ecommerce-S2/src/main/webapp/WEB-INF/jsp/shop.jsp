@@ -89,7 +89,7 @@
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <!-- Product name-->
+                            <%=r.getNom() %>
                             <h5 class="fw-bolder"></h5>
                             <!-- Product price-->
                             <!--<span class="text-muted text-decoration-line-through">$50.00</span>-->
@@ -98,7 +98,7 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<%= request.getContextPath() %>/customer/recetteDetails?id=1">Add to cart</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="<%= request.getContextPath() %>/customer/recetteDetails?id=<%=r.getId()%>">Add to cart</a></div>
                     </div>
                 </div>
             </div>

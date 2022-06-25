@@ -49,7 +49,7 @@
                         for(Portefeuille p : listp ){    
                         %>
                         <tr>
-                            <th scope="row"><%=p.getIdcustomer().getName() %></th>
+                            <th scope="row"><%=p.getIdcustomer().getEmail() %></th>
                             <td><%=p.getMontant() %></td>
                             <td><%=p.getEtat() %></td>
                             <td>

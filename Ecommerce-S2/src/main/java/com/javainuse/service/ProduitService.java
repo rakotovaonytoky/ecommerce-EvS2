@@ -244,7 +244,7 @@ public class ProduitService {
         Portefeuille p = new Portefeuille();
         try {
             p = portefeuilleRepository.findByIdcustomer(c);
-            p.setId(null);
+//            p.setId(null);
             p.setEtat("valide");
             portefeuilleRepository.save(p);
             Customer customer=customerRepository.findOne(c.getId());
@@ -258,6 +258,9 @@ public class ProduitService {
     
     public List<Portefeuille> findPortefeuilleByEtat(String etat){
         return portefeuilleRepository.findByEtat(etat);
+    }
+    public Customer findCustomerById(Integer id){
+        return customerRepository.findOne(id);
     }
 
 }

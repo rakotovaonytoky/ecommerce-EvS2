@@ -215,7 +215,7 @@ var total=0;
             total=existingEntries.length;
             }
 ;
-        number.textContent = total;
+//        number.textContent = total;
         }
 //function checkProduitInCart(id) {
 //if (localStorage.length > 0){
@@ -349,7 +349,7 @@ function insertInChart(listIngredient){
             for (let j = 0; j < resteEnStock.length; j++){
                 if (listIngredient[i].id == resteEnStock[j].id){
                     console.log("misy reste en stock localStorage");
-                    var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) ) - resteEnStock[j].reste;
+                    var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte)  ) - resteEnStock[j].reste;
                             checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
                     }
                     }
@@ -422,6 +422,12 @@ function checkQuantiteIngredientsAndQteProd(qteIngredients, qteProd, produitAjou
 //                        if (Number.isInteger(resultDivision)){
 //                for (let k = 0; k < resultDivision; k++){
                 produitAjouter.push(element);
+               for(let j=0;j<2;j++){
+                    produitAjouter.push(element);
+               }
+
+                
+                
 //                }
 //                } else{
 //                for (let k = 0; k < parseInt(resultDivision) + 1; k++){
