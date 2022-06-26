@@ -5,7 +5,9 @@
  */
 package com.javainuse.controllers;
 
+import com.javainuse.dao.MvtStockRepository;
 import com.javainuse.model.Ingredient;
+import com.javainuse.model.Mvstock;
 import com.javainuse.model.Produit;
 import com.javainuse.model.Recette;
 import com.javainuse.service.OtherService;
@@ -15,6 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +70,9 @@ public class AdminController {
             @RequestParam String description,
             @RequestParam String prix,
             @RequestParam String idcategorie,
-            HttpServletRequest req) throws IOException {
+            @RequestParam String qte,
+            @RequestParam String qteenvente,
+            HttpServletRequest req) throws Exception {
 
 //        System.out.println(nom + "\n" + description + "\n" + prix + "\n" + idcategorie);
         Produit p = new Produit();
@@ -79,14 +84,22 @@ public class AdminController {
         p.setImage2(file2.getOriginalFilename());
         p.setImage3(file3.getOriginalFilename());
         p.setImage4(file4.getOriginalFilename());
+        p.setQte(new BigDecimal(qte));
+        p.setQteenvente(qteenvente);
+        Mvstock mvt=new Mvstock();
+        mvt.setDatemvtstock(new Date());
+        mvt.setEtat(new BigDecimal(qte));
         try {
             produitService.addProductImage(file1, "D:\\NetBeans12\\Ecommerce-S2\\src\\main\\webapp\\resources\\images\\");
             produitService.addProductImage(file2, "D:\\NetBeans12\\Ecommerce-S2\\src\\main\\webapp\\resources\\images\\");
             produitService.addProductImage(file3, "D:\\NetBeans12\\Ecommerce-S2\\src\\main\\webapp\\resources\\images\\");
             produitService.addProductImage(file4, "D:\\NetBeans12\\Ecommerce-S2\\src\\main\\webapp\\resources\\images\\");
-            produitService.insert(p);
+           Produit pp= produitService.insert(p);
+           mvt.setIdproduit(pp);
+           otherservice.insertMvtStock(mvt);
         } catch (Exception e) {
             System.out.print(e.getMessage());
+            throw e;
         }
         ModelAndView m = new ModelAndView("addproduct");
         return m;

@@ -57,6 +57,16 @@
                                 <input type="text" pattern="[0-9]+" id="form4Example1" class="form-control" name="prix" required/>
 
                             </div>
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form4Example1">Quantite en stock:</label>
+                                <input type="text" pattern="[0-9]+" id="form4Example1" class="form-control" name="qte" required/>
+
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form4Example1">Quantite en vente:</label>
+                                <input type="text"  id="form4Example1" class="form-control" name="qteenvente" required/>
+
+                            </div>
                              <div class="form-outline mb-4">
                                 <label class="form-label" for="form4Example1">image1:</label>
                                 <input type="file" name="file1" />

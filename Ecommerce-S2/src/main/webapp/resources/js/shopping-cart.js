@@ -54,9 +54,9 @@ var key = "";
         list += "<tr id='tacol" + i + "' >\n\
             <td >\n\
             <input type='hidden' name='id" + i + "' value='" + existingEntries[i].id + "' />\n\
-                " + existingEntries[i].nom + "</td>\n\
-            <td>" + existingEntries[i].prix + "</td>\n\
-            <td>" + existingEntries[i].qte  + "</td>\n\
+                " + existingEntries[i].id + "</td>\n\
+            <td>" + existingEntries[i].nom + "</td>\n\
+            <td>" + existingEntries[i].prix  + "</td>\n\
             <td> <input type='number' name='quantite" + i + "' value='" + existingEntries[i].qte + "' onchange='updateQuantity(this," + existingEntries[i].id + ")'  />  </td>\n\
             <td>" + "<button type='button' class='btn btn-danger' onclick='remove(this," + existingEntries[i].id + ")'>Effacer</button>" + "</td>\n\
             </tr>\n";
@@ -66,7 +66,7 @@ var key = "";
         }
 document.getElementById('list').innerHTML = list;
         shoppingList();
-        EnableButtonCart();
+        // EnableButtonCart();
 //    document.getElementById("validateCart").disabled = false;
 
         }
@@ -82,15 +82,15 @@ var row = tablerow.parentNode.parentNode;
             const removed=[];
             for (i = 0; i <= existingEntries.length - 1; i++) {
                 if(existingEntries[i].id == key){
-                    const removed = existingEntries.splice(key, existingEntries.length);
+                     existingEntries.splice(i, 1);
                 }
             }
             localStorage.removeItem("produit");
-             localStorage.setItem("produit", JSON.stringify(removed));
+             localStorage.setItem("produit", JSON.stringify(existingEntries));
          }
         location.reload(true);
         updateCart();
-        EnableButtonCart();
+         EnableButtonCart();
         doShowAll();
         }
 
@@ -154,6 +154,8 @@ function EnableButtonCart(){
             if (existingEntries == null){
                 existingEntries = [];
                 document.getElementById("validateCart").disabled = false;
+            } else {
+                      document.getElementById("validateCart").disabled = true;
             }
             
 }
@@ -205,18 +207,17 @@ function insertInChart(listIngredient){
                         }
                         if( listIngredient[i].reste > 0)  produitReste.push(listIngredient[i]);  
                 } else {
-                        let indicereste = 0;
+                       
                         for (let k = 0; k < produitReste.length; k++){
                                 if (listIngredient[i].id == produitReste[k].id) {
                                         checkReste(produitReste[k], listIngredient[i]);  
-                                        //indicereste = k;
-                                        //break;
+                                        produitReste.splice(k,1);
                                 }
                         }
                          for (let j = 0; j < listIngredient[i].nombreIngredients; j++){
                         produitAjouter.push(listIngredient[i]);
                         }
-                        if( listIngredient[i].reste > 0)  //produitReste.push(listIngredient[i]); 
+                        if( listIngredient[i].reste > 0)  produitReste.push(listIngredient[i]); 
                         
                 }
               
@@ -241,19 +242,31 @@ function checkReste(reste, produits) {
         console.log("calcul :" + calculreste);
         if (calculreste < produits.qteEnvte) {
                 console.log("calcul reste inferrieur");
-                 var quantite = parseInt(produits.nombreIngredients) - 1;
+                var quantite=0;
+               // if(produits.nombreIngredients >1){
+                     quantite = parseInt(produits.nombreIngredients) - 1;
+               // }
+               // else if(produits.nombreIngredients  == 1){
+                  //   quantite = parseInt(produits.nombreIngredients) ;
+               // }
+                
                 produits.nombreIngredients = quantite;
                 reste.reste = (produits.qteEnvte) - calculreste;
+                produits.reste = (produits.qteEnvte) - calculreste;
         } else if (calculreste > produits.qteEnvte) {
                 console.log("calcul reste superieur");
 
                 var qte = produits.nombreIngredients * produits.qteEnvte;
                 reste.reste = qte - calculreste;
+                produits.reste =qte - calculreste;
+
         } else {
                 console.log("calcul reste egale");
                 var quantite = parseInt(produits.nombreIngredients) - 1;
                  produits.nombreIngredients = quantite;
                 reste.reste = 0;
+                  produits.reste =0;
+                
         }
 }
  

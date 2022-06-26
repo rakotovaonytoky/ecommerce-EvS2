@@ -6,13 +6,17 @@
 package com.javainuse.service;
 
 import com.javainuse.dao.IngredientRepository;
+import com.javainuse.dao.MvtStockRepository;
 import com.javainuse.dao.PortefeuilleRepository;
 import com.javainuse.dao.RecetteRepository;
 import com.javainuse.dao.StatachatRepository;
 import com.javainuse.model.Ingredient;
+import com.javainuse.model.Mvstock;
 import com.javainuse.model.Portefeuille;
 import com.javainuse.model.Recette;
 import com.javainuse.model.Statachat;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +38,8 @@ public class OtherService {
     private IngredientRepository ingredientRepository;
     @Autowired
     private StatachatRepository statachatRepository;
+    @Autowired
+     private MvtStockRepository mvtStockRepository;
 
     public List<Portefeuille> findPortefeuilleByEtat(String etat) {
         List<Portefeuille> list = new ArrayList<>();
@@ -70,39 +76,41 @@ public class OtherService {
         double qteProduits1 = Double.parseDouble(qteProduitsEnVente);
         result = (qteIngredients1 * 100) / qteProduits1;
         result= (Math.round(result * 1000.0) / 1000.0);
-        return Double.toString(result);
+        return Double.toString((int) result);
     }
      public String[] calculQuantiteProduitNecessaire(String qteIngredients, String qteProduitsEnVente) {
-           final DecimalFormat df = new DecimalFormat("0.00");
-         String testconversion=calculPourcentage( qteIngredients,  qteIngredients);
-        double calculPourcentage=Double.parseDouble(testconversion);
-        
-        double modulo=calculPourcentage/100;
+           String testconversion = calculPourcentage(qteIngredients, qteProduitsEnVente);
+        double calculPourcentage = Double.parseDouble(testconversion);
+        // System.out.println("pourcentage :" + calculPourcentage);
+        double modulo = calculPourcentage / 100;
         double qteIngredients1 = Float.parseFloat(qteIngredients);
         double qteProduits1 = Float.parseFloat(qteProduitsEnVente);
-        double resultatOp=qteIngredients1-qteProduits1;
-        String quantite="";
-        String reste="";
-        if((modulo%100) ==0){
-            System.out.print("xzcxvsdvsdvsdvsdvsdbvsdsdfdfb");
-            quantite= String.valueOf(Math.round(calculPourcentage/100));
-            reste="0";
-        }else{
-            if(resultatOp >0){
-                quantite= String.valueOf(Math.round(calculPourcentage/100) + 1);
-               double temp= modulo -(int)modulo;
-               System.out.print(temp);
-                reste= Double.toString(temp);
-            }else{
-                 quantite= String.valueOf(Math.round(calculPourcentage/100) + 1);
-               double temp= modulo -(int)modulo;
-               System.out.print(temp);
-                reste= Double.toString((1-temp));
+        double resultatOp = qteIngredients1 - qteProduits1;
+        String quantite = "";
+        String reste = "";
+        if ((modulo % 1) == 0) {
+            // System.out.print("xzcxvsdvsdvsdvsdvsdbvsdsdfdfb");
+            quantite = String.valueOf(Math.round(calculPourcentage / 100));
+            reste = "0";
+        } else {
+            if (resultatOp > 0) {
+                quantite = String.valueOf(Math.round(calculPourcentage / 100));
+                double temp = modulo - (int) modulo;
+                reste = Double.toString(temp);
+            } else {
+                quantite = String.valueOf(Math.round(calculPourcentage / 100));
+                double temp = modulo - (int) modulo;
+                BigDecimal bd = new BigDecimal(1 - temp).setScale(2, RoundingMode.HALF_UP);
+                double newInput = bd.doubleValue();
+                reste = Double.toString(newInput);
             }
         }
-        String[] quantityWithReste=new String[2];
-        quantityWithReste[0]=quantite;
-        quantityWithReste[1]=reste;
+        String[] quantityWithReste = new String[2];
+        quantityWithReste[0] = quantite;
+        quantityWithReste[1] = reste;
         return quantityWithReste;
+     }
+     public void insertMvtStock(Mvstock m){
+         mvtStockRepository.save(m);
      }
 }

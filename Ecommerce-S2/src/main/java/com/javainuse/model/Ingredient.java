@@ -152,7 +152,9 @@ public class Ingredient implements Serializable {
 
     @Override
     public String toString() {
-        return "com.javainuse.model.Ingredient[ id=" + id + " ]";
+        return "Ingredient{" + "id=" + id + ", qte=" + qte + ", qteIngredients=" + qteIngredients + ", reste=" + reste + ", nombreProduit=" + nombreProduit + ", idproduit=" + idproduit + ", idrecette=" + idrecette + '}';
     }
+
+   
     
 }

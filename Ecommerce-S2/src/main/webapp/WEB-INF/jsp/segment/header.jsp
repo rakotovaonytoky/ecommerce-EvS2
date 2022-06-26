@@ -94,7 +94,8 @@
                             <input type="hidden" id="qteproduit" name="qteProduit" value="" />
                             <input type="hidden" id="totalprixproduit" name="totalprixproduit" value="" />
                             <script>
-                                document.getElementById("qteproduit").value = localStorage.length;
+                                 var existingEntries = JSON.parse(localStorage.getItem("produit"));
+                                document.getElementById("qteproduit").value = existingEntries.length;
                                
                             </script>
                             <table class="table" id=list></table>
@@ -106,7 +107,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" id="validateCart" class="btn btn-primary" disabled="">Valider</button>
+                            <button type="submit" id="validateCart" class="btn btn-primary" >Valider</button>
                         </div>
                     </form>
 

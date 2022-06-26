@@ -88,8 +88,8 @@ public class CustomerController {
     }
 
     @GetMapping("panier")
-    public ModelAndView getPanier(Principal principal, HttpServletRequest req) {
-        ModelAndView m=new ModelAndView("redirect:/customer/");
+    public ModelAndView getPanier(Principal principal, HttpServletRequest req) throws Exception {
+        ModelAndView m=new ModelAndView("redirect:/customer/shop");
         if (principal == null) {
             String redirect = "redirect:/";
             new ModelAndView(redirect);
@@ -114,11 +114,16 @@ public class CustomerController {
             produitService. estValidePaiement( listp,c);
             produitService.checkQteProduit(listpQuantity);
 //            Manala ao amin'stock
-            produitService.updateMvtStockWhenInsertCmd(listpQuantity);
+ //           produitService.updateMvtStockWhenInsertCmd(listpQuantity);
 //            Mampiditra dans achat
-            produitService.insertAchatWhenValidCart(listp, c);
+//            produitService.insertAchatWhenValidCart(listp, c);
+     for(ProductQuantity p : listpQuantity)  {
+         System.out.println(p);
+     }     
+
+
 //            Mbola mila asina mouvement de stock
-            m.addObject("Paniermessage", "ajout avec succces");
+            m.addObject("PaniermessageSuccess", "ajout avec succces");
         }catch(Exception e){
             m.addObject("Paniermessage", e.getMessage());
 

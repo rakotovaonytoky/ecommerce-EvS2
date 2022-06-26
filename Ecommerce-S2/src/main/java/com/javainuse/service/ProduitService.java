@@ -78,12 +78,14 @@ public class ProduitService {
         return categorieRepository.findOne(id);
     }
 
-    public void insert(Produit p) {
+    public Produit insert(Produit p) throws Exception{
+        Produit pp=new Produit();
         try {
-            produitRepository.save(p);
+           pp= produitRepository.save(p);
         } catch (Exception e) {
             throw e;
         }
+        return pp;
     }
 
     public void addProductImage(MultipartFile file, String pathFolder) throws FileNotFoundException, IOException {
@@ -176,7 +178,7 @@ public class ProduitService {
         return sum;
     }
 
-    public void estValidePaiement(List<Produit> listproduit, Customer c) {
+    public void estValidePaiement(List<Produit> listproduit, Customer c) throws Exception{
         Integer sum = getTotalProductPrice(listproduit);
         if (sum > c.getSolde()) {
             throw new RuntimeException("portefeuille insufisant");
@@ -184,7 +186,7 @@ public class ProduitService {
 
     }
 
-    public void checkQteProduit(List<ProductQuantity> listp) {
+    public void checkQteProduit(List<ProductQuantity> listp) throws Exception{
         for (ProductQuantity p : listp) {
             if (p.getQte() > findProduitById(p.getId()).getQte().intValue()) {
                 throw new RuntimeException("qte insuffisant dans le stock");
