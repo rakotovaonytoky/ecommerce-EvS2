@@ -1,21 +1,4 @@
 
-
-//function SaveItem() {
-//var id = parseInt(document.forms.cart.id.value);
-//        var nom = document.forms.cart.nom.value;
-//        var prix = parseInt(document.forms.cart.prix.value);
-//        var quantite = parseInt(document.forms.cart.quantite.value);
-//        var tableau = new Array(4);
-//        tableau[0] = id;
-//        tableau[1] = nom;
-//        tableau[2] = prix;
-//        tableau[3] = quantite;
-//        checkProduitInCart(id);
-//        localStorage.setItem(id, JSON.stringify(tableau));
-//        alert("Ajout avec success");
-//        updateCart();
-//        doShowAll();
-//        }
 function SaveItem() {
 var id = parseInt(document.forms.cart.id.value);
         var nom = document.forms.cart.nom.value;
@@ -58,35 +41,7 @@ var id = parseInt(document.forms.cart.id.value);
 
 
 
-//function doShowAll() {
-//
-//var key = "";
-//        var list = "<thead><tr><th scope='row'>Item</th><th>Nom</th><th>Prix</th><th>Quantite</th></tr></thead>\n";
-//        var i = 0;
-//        //for more advance feature, you can set cap on max items in the cart
-//        var tempStorage = "";
-//        for (i = 0; i <= localStorage.length - 1; i++) {
-//key = localStorage.key(i);
-//        tempStorage = JSON.parse(localStorage.getItem(key));
-//        list += "<tr id='tacol" + i + "' >\n\
-//            <td >\n\
-//            <input type='hidden' name='id" + i + "' value='" + tempStorage[0] + "' />\n\
-//                " + tempStorage[0] + "</td>\n\
-//            <td>" + tempStorage[1] + "</td>\n\
-//            <td>" + tempStorage[2] + "</td>\n\
-//            <td> <input type='number' name='quantite" + i + "' value='" + tempStorage[3] + "' onchange='updateQuantity(this," + key + ")'  />  </td>\n\
-//            <td>" + "<button type='button' class='btn btn-danger' onclick='remove(this," + key + ")'>Effacer</button>" + "</td>\n\
-//            </tr>\n";
-//}
-//if (list == "<tr><th scope='row'>Item</th><th>Nom</th><th>Prix</th><th>Quantite</th></tr>\n") {
-//list += "<tr><td colspan='3'><i>empty</i></td></tr>\n";
-//}
-//document.getElementById('list').innerHTML = list;
-//        shoppingList();
-//        EnableButtonCart();
-////    document.getElementById("validateCart").disabled = false;
-//
-//        }
+
 function doShowAll() {
 
 var key = "";
@@ -161,22 +116,7 @@ var existingEntries = JSON.parse(localStorage.getItem("produit"));
                 document.getElementById('totalprixproduit').value = totalPrice;
         }
         }
-        
-        
-//function updateQuantity(quantity, key) {
-//quantity = parseInt(quantity.value);
-//        var item = JSON.parse(localStorage.getItem(key));
-//        if (quantity <= 0 || isNaN(quantity)) {
-//quantity = 1;
-//}
-//var tableau = new Array(4);
-//        tableau[0] = item[0];
-//        tableau[1] = item[1];
-//        tableau[2] = item[2];
-//        tableau[3] = quantity;
-//        localStorage.setItem(tableau[0], JSON.stringify(tableau));
-//        updateCart();
-//        }
+
 function updateQuantity(quantity, key) {
             quantity = parseInt(quantity.value);
          var existingEntries = JSON.parse(localStorage.getItem("produit"));
@@ -194,16 +134,7 @@ function updateQuantity(quantity, key) {
      }
      }       
         
-//function shoppingList() {
-//const number = document.getElementById("total-product");
-////    console.log(document.getElementById("total-product").innerHTML);
-//        var total = localStorage.length;
-//        if (localStorage.length < 0) {
-//total = 0
-//}
-//;
-//        number.textContent = total;
-//        }
+
 function shoppingList() {
 const number = document.getElementById("total-product");
 var total=0;
@@ -217,25 +148,7 @@ var total=0;
 ;
         number.textContent = total;
         }
-//function checkProduitInCart(id) {
-//if (localStorage.length > 0){
-//    for (i = 0; i <= localStorage.length - 1; i++) {
-//        if (localStorage.key(i) == id) {
-//        alert("Ce produit est déja dans votre panier");
-//                return;
-//        }
-//    }
-//    }
-//}
-function checkProduitInCart(id) {
 
-}
-
-//function EnableButtonCart(){
-//    if (localStorage.length > 0){
-//    document.getElementById("validateCart").disabled = false;
-//    }
-//}
 function EnableButtonCart(){
     var existingEntries = JSON.parse(localStorage.getItem("produit"));
             if (existingEntries == null){
@@ -259,6 +172,7 @@ var getid = document.getElementById("id" + i);
         var getnom = document.getElementById("nom" + i).value;
         var getreste = document.getElementById("reste" + i).value;
         var nombreIngredients = document.getElementById("nombreIngredients" + i).value;
+        var ingredientnecessaire = document.getElementById("ingredientnecessaire" + i).value;
         var pourcentage = parseInt(document.getElementById("pourcentage" + i).value);
         var produit = {
         "id":getid.value,
@@ -267,6 +181,7 @@ var getid = document.getElementById("id" + i);
                 "qteEnvte":getqteEnvte,
                 "reste":getreste,
                 "nombreIngredients":nombreIngredients,
+                "ingredientnecessaire":ingredientnecessaire,
                 "pourcentage":pourcentage,
                 "qte":1,
         };
@@ -275,71 +190,7 @@ var getid = document.getElementById("id" + i);
 }
 return result;
         }
-//function insertInChart(listIngredient){
-////    liste produit vide
-//        var produitAjouter = JSON.parse(localStorage.getItem("produit"));
-//        if(produitAjouter==null) produitAjouter=[];
-//                var produitReste = JSON.parse(localStorage.getItem("resteProduit"));
-//                 if(produitReste==null) produitReste=[];
-//                var qteDemandeClient = parseInt(document.getElementById("quantite").value);
-//                for (let i = 0; i < listIngredient.length; i++) {
-//            var resteEnStock = JSON.parse(localStorage.getItem("resteProduit"));
-//                    if (resteEnStock !== null){
-//            for (let j = 0; j < resteEnStock.length; j++){
-//                if (listIngredient[i].id == resteEnStock[j].id){
-//                    var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) * qteDemandeClient) - resteEnStock[j].reste;
-//                            checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
-//                    }
-//                    }
-//                }
-//                else if (produitReste.length >0){
-//                    for(let l=0;l<produitReste.length;l++){
-//                        if(listIngredient[i].id == produitReste[l].id){
-//                            console.log("mandalove ato ohhh");
-//                             var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) * qteDemandeClient) - produitReste[l].reste;
-//                        checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
-//                        
-//                        }    
-//                    }
-//
-//                }
-//                else{
-//                var qteIngredients = (calculIngredientNecessaire(listIngredient[i].qteIngredient, listIngredient[i].qteEnvte) * qteDemandeClient);
-//                        checkQuantiteIngredientsAndQteProd(qteIngredients, listIngredient[i].qteEnvte, produitAjouter, produitReste, listIngredient[i]);
-//                }
-//        }
-//        console.log("------");
-//                console.log(produitAjouter);
-//                console.log("----Reste--");
-//                console.log(produitReste);
-//// manao grouBy produitAjouter
-//  var groupByProduitAjouter = [];
-//            produitAjouter.reduce(function (res, value) {
-//                if (!res[value.id]) {
-//                    res[value.id] = { id: value.id, qte: 0 ,nom:value.nom,prix:value.prix};
-//                    groupByProduitAjouter.push(res[value.id])
-//                }
-//                res[value.id].qte += value.qte;
-//                return res;
-//            }, {});
-//            console.log(groupByProduitAjouter);
-//// manao groupby produitreste
-//  var groupByReste = [];
-//            produitReste.reduce(function (res, value) {
-//                if (!res[value.id]) {
-//                    res[value.id] = { id: value.id, reste: 0 };
-//                    groupByReste.push(res[value.id])
-//                }
-//                res[value.id].text += value.text;
-//                return res;
-//            }, {});
-//            console.log(groupByReste);
-////insertion localStorage produitAjouter
-// localStorage.setItem("produit", JSON.stringify(groupByProduitAjouter));
-////insertion localStorage produitReste
-// localStorage.setItem("resteProduit", JSON.stringify(groupByReste));
-//    }
-//        vaovao
+
 function insertInChart(listIngredient){
 //    liste produit vide
         var produitAjouter = JSON.parse(localStorage.getItem("produit"));
@@ -348,99 +199,101 @@ function insertInChart(listIngredient){
                  if(produitReste==null) produitReste=[];
                 var qteDemandeClient = parseInt(document.getElementById("quantite").value);
         for (let i = 0; i < listIngredient.length; i++) {
-                for (let j = 0; j < listIngredient[i].nombreIngredients; j++){
+                if (produitReste == null) {
+                        for (let j = 0; j < listIngredient[i].nombreIngredients; j++){
                         produitAjouter.push(listIngredient[i]);
-                }        
-                produitReste.push(listIngredient[i]);
+                        }
+                        if( listIngredient[i].reste > 0)  produitReste.push(listIngredient[i]);  
+                } else {
+                        let indicereste = 0;
+                        for (let k = 0; k < produitReste.length; k++){
+                                if (listIngredient[i].id == produitReste[k].id) {
+                                        checkReste(produitReste[k], listIngredient[i]);  
+                                        //indicereste = k;
+                                        //break;
+                                }
+                        }
+                         for (let j = 0; j < listIngredient[i].nombreIngredients; j++){
+                        produitAjouter.push(listIngredient[i]);
+                        }
+                        if( listIngredient[i].reste > 0)  //produitReste.push(listIngredient[i]); 
+                        
+                }
+              
+               
         }
-        console.log("------");
-                console.log(produitAjouter);
-                console.log("----Reste--");
-                console.log(produitReste);
 // manao grouBy produitAjouter
-  var groupByProduitAjouter = [];
-            produitAjouter.reduce(function (res, value) {
+  var ProduitAjouter = groupByProduit(produitAjouter);
+// manao groupby produitreste
+  var reste = groupByReste(produitReste) ;
+//insertion localStorage produitAjouter
+ localStorage.setItem("produit", JSON.stringify(ProduitAjouter));
+//insertion localStorage produitReste
+ localStorage.setItem("resteProduit", JSON.stringify(reste));
+    }
+        
+      
+function checkReste(reste, produits) {
+         
+        var calculreste = produits.ingredientnecessaire - reste.reste; 
+        console.log("reste.ingredientnecessaire :" + produits.ingredientnecessaire);
+        console.log("reste.reste :" + reste.reste);
+        console.log("calcul :" + calculreste);
+        if (calculreste < produits.qteEnvte) {
+                console.log("calcul reste inferrieur");
+                 var quantite = parseInt(produits.nombreIngredients) - 1;
+                produits.nombreIngredients = quantite;
+                reste.reste = (produits.qteEnvte) - calculreste;
+        } else if (calculreste > produits.qteEnvte) {
+                console.log("calcul reste superieur");
+
+                var qte = produits.nombreIngredients * produits.qteEnvte;
+                reste.reste = qte - calculreste;
+        } else {
+                console.log("calcul reste egale");
+                var quantite = parseInt(produits.nombreIngredients) - 1;
+                 produits.nombreIngredients = quantite;
+                reste.reste = 0;
+        }
+}
+ 
+function groupByProduit(produit) {
+        var groupByProduitAjouter = [];
+            produit.reduce(function (res, value) {
                 if (!res[value.id]) {
-                    res[value.id] = { id: value.id, qte: 0 ,nom:value.nom,prix:value.prix};
+                        res[value.id] = {
+                                id: value.id,
+                                nom: value.nom,
+                                qte: 0,
+                                reste: value.reste,
+                                nombreIngredients: value.nombreIngredients,
+                                ingredientnecessaire:value.ingredientnecessaire,
+                                prix: value.prix
+                        };
                     groupByProduitAjouter.push(res[value.id])
                 }
                 res[value.id].qte += value.qte;
                 return res;
             }, {});
-            console.log(groupByProduitAjouter);
-// manao groupby produitreste
-  var groupByReste = [];
-            produitReste.reduce(function (res, value) {
+        return groupByProduitAjouter;
+}
+function groupByReste(reste) {
+          var groupByReste = [];
+            reste.reduce(function (res, value) {
                 if (!res[value.id]) {
-                    res[value.id] = { id: value.id, reste: 0 };
+                    res[value.id] = { id: value.id, qte: 0 ,nom:value.nom,reste:value.reste };
                     groupByReste.push(res[value.id])
                 }
-                res[value.id].text += value.text;
+                // res[value.id].reste += value.reste;
                 return res;
             }, {});
-            console.log(groupByReste);
-//insertion localStorage produitAjouter
- localStorage.setItem("produit", JSON.stringify(groupByProduitAjouter));
-//insertion localStorage produitReste
- localStorage.setItem("resteProduit", JSON.stringify(groupByReste));
-    }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-function checkQuantiteIngredientsAndQteProd(qteIngredients, qteProd, produitAjouter, produitReste, element){
-    var result = qteIngredients - qteProd;
-    result =parseInt(result);
-    console.log(qteIngredients +"-"+qteProd);
-            if (result > 0){
-//                let resultDivision = qteIngredients / qteProd;
-//                        if (Number.isInteger(resultDivision)){
-//                for (let k = 0; k < resultDivision; k++){
-                produitAjouter.push(element);
-               for(let j=0;j<2;j++){
-                    produitAjouter.push(element);
-               }
-
-                
-                
-//                }
-//                } else{
-//                for (let k = 0; k < parseInt(resultDivision) + 1; k++){
-//
-//                produitAjouter.push(element);
-//                }
-                let reste = (resultDivision.toFixed(2)) - parseInt(resultDivision);
-                        element = {
-                        "id":element.id,
-                                "reste":reste
-                        };
-                        produitReste.push(element);
-//                    }
-        }else if(result == 0){
-             produitAjouter.push(element);
-        }else {
-        produitAjouter.push(element);
-                element = {
-                "id":element.id,
-                        "reste":(result*-1)
-                };
-                produitReste.push(element);
-        }
+        return groupByReste;
 }
-function isFloat(n){
-return Number(n) === n && n % 1 !== 0;
-        }
+
 function SaveItemRelease(){
 var nbinput = parseInt(document.getElementById("nbinbputT").value);
         var getInputvalue = getListIngredients(nbinput);
         insertInChart(getInputvalue);
         updateCart();
         doShowAll();
- }
+}
