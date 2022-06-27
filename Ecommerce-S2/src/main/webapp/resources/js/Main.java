@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.MalformedURLException;
 
 public class Main {
     public static String calculPourcentage(String qteIngredients, String qteProduitsEnVente) {
@@ -37,9 +38,14 @@ public class Main {
                 double temp = modulo - (int) modulo;
                 reste = Double.toString(temp);
             } else {
-                quantite = String.valueOf(Math.round(calculPourcentage / 100));
+                System.out.println("reste inferrieur");
+                quantite = String.valueOf(Math.round(calculPourcentage / 100) + 1);
                 double temp = modulo - (int) modulo;
-                BigDecimal bd = new BigDecimal(1 - temp).setScale(2, RoundingMode.HALF_UP);
+                if ((qteIngredients1 * 1) == 1) {
+                    temp = qteProduits1 - qteIngredients1;
+                }
+                System.out.println("modulo result :" + modulo);
+                BigDecimal bd = new BigDecimal(temp).setScale(2, RoundingMode.HALF_UP);
                 double newInput = bd.doubleValue();
                 reste = Double.toString(newInput);
             }
@@ -51,7 +57,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String[] qte = calculQuantiteProduitNecessaire("0.2", "0.25");
+        String[] qte = calculQuantiteProduitNecessaire("0.1", "0.25");
         System.out.println("quantite produit necessaire" + qte[0]);
         System.out.println("reste" + qte[1]);
     }

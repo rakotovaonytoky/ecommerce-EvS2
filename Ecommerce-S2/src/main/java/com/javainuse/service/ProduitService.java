@@ -251,6 +251,7 @@ public class ProduitService {
             portefeuilleRepository.save(p);
             Customer customer=customerRepository.findOne(c.getId());
             c.setSolde(c.getSolde() + p.getMontant());
+            customerRepository.save(customer);
         } catch (Exception e) {
             throw e;
         }
@@ -263,6 +264,9 @@ public class ProduitService {
     }
     public Customer findCustomerById(Integer id){
         return customerRepository.findOne(id);
+    }
+    public void insertCustomer(Customer c) throws Exception{
+        customerRepository.save(c);
     }
 
 }

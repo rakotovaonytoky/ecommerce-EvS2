@@ -5,11 +5,13 @@
  */
 package com.javainuse.controllers;
 
+import com.google.gson.Gson;
 import com.javainuse.dao.MvtStockRepository;
 import com.javainuse.model.Ingredient;
 import com.javainuse.model.Mvstock;
 import com.javainuse.model.Produit;
 import com.javainuse.model.Recette;
+import com.javainuse.model.Vstatachat;
 import com.javainuse.service.OtherService;
 import com.javainuse.service.ProduitService;
 import java.io.BufferedOutputStream;
@@ -17,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -187,19 +190,34 @@ public class AdminController {
     @GetMapping("updatePortefeuille")
     public ModelAndView updatePortefeuille(@RequestParam String idcustomer){
 //        idcustomer="1";
-      ModelAndView m=new ModelAndView() ;
+      ModelAndView m=new ModelAndView("indexAdmin") ;
       try{
           produitService.findPortefeuilleByIdCustomerAndSet(produitService.findCustomerById(Integer.parseInt(idcustomer)));
       }catch(Exception ex){
           throw ex;
       }
-      m.setViewName("redirect:/customer/index");
+      
       return m;
     }
     @GetMapping("ToPagePortefeuille")
     public ModelAndView  toPagePortefeuille(){
         ModelAndView m=new ModelAndView("adminPortfolio");
         m.addObject("key", produitService.findPortefeuilleByEtat("attente"));
+        return m;
+    }
+    @GetMapping("statistique")
+    public ModelAndView loadStatistique(){
+        ModelAndView m=new ModelAndView("chartAdmin");
+        List<Vstatachat> vstat=otherservice.showStatistiqueProduit();
+        List<String> listProduit=new ArrayList<String>();
+        List<Integer> nbproduit=new ArrayList<Integer>();
+        for(Vstatachat v : vstat){
+            listProduit.add(v.getNom());
+            nbproduit.add(v.getSum().intValue());
+        }
+              m.addObject("nomProduit",  new Gson().toJson( listProduit));
+              m.addObject("nbproduit",new Gson().toJson( nbproduit));
+
         return m;
     }
 }

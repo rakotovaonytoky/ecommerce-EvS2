@@ -1,8 +1,10 @@
 package com.javainuse.controllers;
 
+import com.javainuse.model.Customer;
 import com.javainuse.model.Employee;
 import com.javainuse.model.UserRegistration;
 import com.javainuse.service.EmployeeService;
+import com.javainuse.service.ProduitService;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,9 @@ public class EmployeeController {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
+    @Autowired
+    private ProduitService produitService;
 
     @RequestMapping("/welcome")
     public ModelAndView firstPage() {
@@ -69,14 +74,24 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView processRegister(@ModelAttribute("user") UserRegistration userRegistrationObject) {
+    public ModelAndView processRegister(@ModelAttribute("user") UserRegistration userRegistrationObject) throws Exception {
 
-        // authorities to be granted
-//        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-//        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-//        String encodedPassword = bCryptPasswordEncoder.encode(userRegistrationObject.getPassword());
-//        User user = new User(userRegistrationObject.getUsername(), encodedPassword, authorities);
-//        jdbcUserDetailsManager.createUser(user);
+//         authorities to be granted
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        String encodedPassword = bCryptPasswordEncoder.encode(userRegistrationObject.getPassword());
+        User user = new User(userRegistrationObject.getUsername(), encodedPassword, authorities);
+        Customer c=new Customer();
+        c.setName(userRegistrationObject.getUsername());
+        c.setEmail(userRegistrationObject.getUsername() +"gmail.com");
+        c.setSolde(0);
+        try{
+           jdbcUserDetailsManager.createUser(user); 
+           produitService.insertCustomer(c);
+        }catch(Exception ex){
+            throw ex;
+        }
+        
         return new ModelAndView("redirect:/login");
     }
 

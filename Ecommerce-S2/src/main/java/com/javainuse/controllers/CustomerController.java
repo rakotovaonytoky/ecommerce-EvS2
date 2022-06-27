@@ -117,6 +117,8 @@ public class CustomerController {
  //           produitService.updateMvtStockWhenInsertCmd(listpQuantity);
 //            Mampiditra dans achat
 //            produitService.insertAchatWhenValidCart(listp, c);
+//            manena volan'utilisateur
+//            produitService.substractCustomerPortfolio(listp, c);
      for(ProductQuantity p : listpQuantity)  {
          System.out.println(p);
      }     

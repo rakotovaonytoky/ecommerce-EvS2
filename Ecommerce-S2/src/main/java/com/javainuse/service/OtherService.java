@@ -10,11 +10,13 @@ import com.javainuse.dao.MvtStockRepository;
 import com.javainuse.dao.PortefeuilleRepository;
 import com.javainuse.dao.RecetteRepository;
 import com.javainuse.dao.StatachatRepository;
+import com.javainuse.dao.VstatachatRepository;
 import com.javainuse.model.Ingredient;
 import com.javainuse.model.Mvstock;
 import com.javainuse.model.Portefeuille;
 import com.javainuse.model.Recette;
 import com.javainuse.model.Statachat;
+import com.javainuse.model.Vstatachat;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -40,7 +42,9 @@ public class OtherService {
     private StatachatRepository statachatRepository;
     @Autowired
      private MvtStockRepository mvtStockRepository;
-
+    @Autowired
+    private VstatachatRepository vstatachatRepository;
+    
     public List<Portefeuille> findPortefeuilleByEtat(String etat) {
         List<Portefeuille> list = new ArrayList<>();
         list = portefeuilleRepository.findByEtat(etat);
@@ -112,5 +116,9 @@ public class OtherService {
      }
      public void insertMvtStock(Mvstock m){
          mvtStockRepository.save(m);
+     }
+     
+     public List<Vstatachat> showStatistiqueProduit(){
+         return vstatachatRepository.findAll();
      }
 }
